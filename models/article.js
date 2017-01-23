@@ -10,6 +10,10 @@ module.exports = function (sequelize, DataTypes) {
 		},
 		content: {
 			type: DataTypes.TEXT
+		},
+		apiUrl: {
+			type: DataTypes.STRING,
+			allowNull: false
 		}
 	});
 };

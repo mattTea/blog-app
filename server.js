@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/public'));
 
 // POST /articles
 app.post('/articles', function(req, res) {
-    var body = _.pick(req.body, 'title', 'author', 'content');
+    var body = _.pick(req.body, 'title', 'author', 'content', 'apiUrl');
 
     db.article.create(body).then(function(article) {
         res.json(article.toJSON());
@@ -25,6 +25,12 @@ app.post('/articles', function(req, res) {
 app.get('/articles', function(req, res) {
     var query = req.query;
     var where = {};
+
+    if (query.hasOwnProperty('author')) {
+		where.author = {
+			$like: '%' + query.author + '%'
+		};
+	}
 
     if (query.hasOwnProperty('q') && query.q.length > 0) {
         where.title = {
@@ -39,9 +45,8 @@ app.get('/articles', function(req, res) {
     });
 });
 
-
-db.sequelize.sync({force: true}).then(function() {
+db.sequelize.sync(/*{force: true}*/).then(function() {
 	app.listen(PORT, function() {
-		console.log('Express listening on port ' + PORT + '!');
+		console.log('Express listening on port ' + PORT + '.');
 	});
 });

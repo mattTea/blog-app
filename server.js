@@ -2,12 +2,20 @@ var express = require('express');
 var app = express();
 var db = require('./db.js');
 var _ = require('underscore');
+var Cosmic = require('cosmicjs');
 
 var bodyParser = require('body-parser');
 var PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
+
+
+// cosmic content call
+const bucket = { slug: 'matttea-blog-app' };
+Cosmic.getObjects({ bucket }, function(err, res) {
+  console.log(res.objects);
+});
 
 
 // POST /articles

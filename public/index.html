@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<title>mattTea t-shaped BA blog</title>
 	</head>
 
@@ -10,9 +11,41 @@
 	<p>chatting about my experiences whilst learning to code. and still trying to be a business analyst.</p>
 
 	<h2>the blogs...</h2>
+	
+	<input id="blog-search-box" type="text" placeholder="Search blog titles"/>
+	<button id="search-button">Search</button>
+	
 	<div id="blogs"><!--articles to be served here -->
 		
 	</div>
 
 	</body>
+
+	<script>
+    //when page has fully rendered then execute this code
+    $(document).ready(function () {
+
+        $("#search-button").click(function (element) {
+            //get blogs from input box
+            $("#blogs").empty(); // added to clear previous result
+            
+            var articleHeadline = $("#blog-search-box").val();
+            console.log('articleHeadline:', articleHeadline);
+
+            //query backend api and render the result
+            var apiHeadline = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + articleHeadline;
+            console.log('querying api...');
+            $.get(apiHeadline, function (data) {
+            	$("#blogs").html(JSON.stringify(data));
+            	console.log('query finished, got', data);
+            });
+    	});
+    });
+
+    //TODO - return only specific fields, e.g Headline, Author, Hero image, Date created, Body
+    //TODO - Add elements to display author details
+
+
+    </script>
 </html>
+

@@ -1,10 +1,3 @@
-//TODO query backend api using query urls
-	//change api to point to cosmic.js api urls with queries based on: return all, title, author
-	//add user entry boxes and buttons to index plug-in to search for articles based on title and author
-
-	//within server.js update the api methods and queries against the object properties (title, author)
-
-
 var express = require('express');
 var app = express();
 // var db = require('./db.js');
@@ -28,32 +21,6 @@ config.bucket = {
 
 
 // GET /articles
-// app.get('/articles', function(req, res) {
-// 	var query = req.query;
-// 	var where = {};
-
-// 	if (query.hasOwnProperty('author')) {
-// 		where.author = {
-// 			$like: '%' + query.author + '%'
-// 		};
-// 	}
-
-// 	if (query.hasOwnProperty('q') && query.q.length > 0) {
-// 		where.title = {
-// 			$like: '%' + query.q + '%'
-// 		};
-// 	}
-
-// 	db.article.findAll({where: where}).then(function (articles) {
-//         res.json(articles);
-//     }, function (e) {
-//         res.status(500).send();
-//     });
-// });
-
-
-
-// GET /articles
 app.get('/articles', function(req, res) {
 
 	var articlesParams = {
@@ -68,14 +35,11 @@ app.get('/articles', function(req, res) {
 	});
 });
 
+//TODO - GET /articles by part Headline query
+//TODO - GET /articles by Author & part Author query
 
-// Get object
-// var objectParams = {
-// 	slug: 'part-2-the-beginnings-of-addiction'
-// }
-// Cosmic.getObject(config, objectParams, function(error, response) {
-// 	console.log(response);
-// });
+//https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=Bonus blog 1
+
 
 app.listen(PORT, function() {
 	console.log('Express listening on port ' + PORT + '.');

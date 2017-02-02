@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<title>mattTea t-shaped BA blog</title>
+		<title>the t-shaped BA</title>
 	</head>
 
 	<body>
@@ -33,10 +33,11 @@
             console.log('articleHeadline:', articleHeadline);
 
             //query backend api and render the result
-            var apiHeadline = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + articleHeadline;
+            // var apiHeadline = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + articleHeadline;
+            var apiHeadline = "https://api.cosmicjs.com/v1/matttea-blog-app/object/" + articleHeadline; //requires part-1-a-taster format
             console.log('querying api...');
             $.get(apiHeadline, function (data) {
-            	$("#blogs").html(JSON.stringify(data));
+            	$("#blogs").html(JSON.stringify(data.object.content));
             	console.log('query finished, got', data);
             });
     	});
@@ -44,7 +45,6 @@
 
     //TODO - return only specific fields, e.g Headline, Author, Hero image, Date created, Body
     //TODO - Add elements to display author details
-
 
     </script>
 </html>

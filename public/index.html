@@ -29,15 +29,17 @@
             //get blogs from input box
             $("#blogs").empty(); // added to clear previous result
             
-            var articleHeadline = $("#blog-search-box").val();
-            console.log('articleHeadline:', articleHeadline);
+            var articleHeadlineSearch = $("#blog-search-box").val();
+            console.log('articleHeadlineSearch:', articleHeadlineSearch);
 
             //query backend api and render the result
-            // var apiHeadline = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + articleHeadline;
-            var apiHeadline = "https://api.cosmicjs.com/v1/matttea-blog-app/object/" + articleHeadline; //requires part-1-a-taster format
+            // var apiSearch = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value_has=" + articleHeadlineSearch; //allows search string, but not object.content properties
+            var apiSearch = "https://api.cosmicjs.com/v1/matttea-blog-app/object/" + articleHeadlineSearch; //requires part-1-a-taster (slug) format         
             console.log('querying api...');
-            $.get(apiHeadline, function (data) {
-            	$("#blogs").html(JSON.stringify(data.object.content));
+            $.get(apiSearch, function (data) {
+            	// $("#blogs").html(JSON.stringify(data));
+            	$("#blogs").html(JSON.stringify(data.object.title + data.object.metadata.author.title + data.object.content));
+            	// $("#blogs").html(JSON.stringify(data.object.content));
             	console.log('query finished, got', data);
             });
     	});

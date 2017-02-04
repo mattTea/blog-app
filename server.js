@@ -40,6 +40,7 @@ app.get('/articles', function(req, res) {
 
 //https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=Bonus blog 1
 //https://api.cosmicjs.com/v1/matttea-blog-app/object/part-1-a-taster
+//https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value_has=taster
 
 app.listen(PORT, function() {
 	console.log('Express listening on port ' + PORT + '.');

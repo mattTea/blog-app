@@ -12,12 +12,17 @@
 
 	<h2>the blogs...</h2>
 	
-	<input id="blog-search-box" type="text" placeholder="Search blog titles"/>
+	<input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
 	<button id="search-button">Search</button>
 	
-	<div id="blogs"><!--articles to be served here -->
-		
-	</div>
+	<div id="blogs"><!--articles to be served here --></div>
+
+    <div id="blog-title"></div>
+
+    <div id="blog-author"></div>
+
+    <div id="blog-content"></div>
+
 
 	</body>
 
@@ -26,28 +31,39 @@
     $(document).ready(function () {
 
         $("#search-button").click(function (element) {
-            //get blogs from input box
-            $("#blogs").empty(); // added to clear previous result
             
-            var articleHeadlineSearch = $("#blog-search-box").val();
+            //get blogs from input box
+            var articleHeadlineSearch = $("#blog-search-box").val().toLowerCase();
             console.log('articleHeadlineSearch:', articleHeadlineSearch);
 
             //query backend api and render the result
-            // var apiSearch = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value_has=" + articleHeadlineSearch; //allows search string, but not object.content properties
-            var apiSearch = "https://api.cosmicjs.com/v1/matttea-blog-app/object/" + articleHeadlineSearch; //requires part-1-a-taster (slug) format         
+            var apiSearch = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=search&metafield_value_has=" + articleHeadlineSearch;
             console.log('querying api...');
+            
             $.get(apiSearch, function (data) {
-            	// $("#blogs").html(JSON.stringify(data));
-            	$("#blogs").html(JSON.stringify(data.object.title + data.object.metadata.author.title + data.object.content));
-            	// $("#blogs").html(JSON.stringify(data.object.content));
-            	console.log('query finished, got', data);
+                //possibly a for loop in here?
+            	var title = JSON.stringify(data.objects[0].title);
+                var author = JSON.stringify(data.objects[0].metadata.author.title);
+                var content = JSON.stringify(data.objects[0].content);
+
+            	$("#blogs").html("<br>" + title + "<br>" + "<br>" + author + "<br>" + content);
+                console.log('query finished, got', data);
             });
     	});
     });
 
-    //TODO - return only specific fields, e.g Headline, Author, Hero image, Date created, Body
-    //TODO - Add elements to display author details
+    //TODO - show all blogs as standard and change search to filter
+    //TODO - ability to return multiple search results (just [0] at present)
+    //TODO - html divs and style sheet to show JSON property values differently (Title, Author, etc)
+    //TODO - Add elements to display author pic and details
 
     </script>
 </html>
 
+<!-- set up divs so that we have...
+div for blog title
+div for blog author
+div for blog content
+
+hopefully these div types or whatever they are can be set up as common components
+then need to repeat for n blogs -->

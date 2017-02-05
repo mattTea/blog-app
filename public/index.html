@@ -15,20 +15,22 @@
 	<input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
 	<button id="search-button">Search</button>
 	
-	<div id="blogs"><!--articles to be served here --></div>
-
-    <div id="blog-title"></div>
-
-    <div id="blog-author"></div>
-
-    <div id="blog-content"></div>
-
+    <div id="blogs">
+        <div id="blog-title" style="color:darkgreen;font-size:200%;font-weight:bold;margin:25px;text-align:center"></div>
+        <div id="blog-author" style="font-weight:bold;text-align:center"></div>
+        <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
+        <div id="blog-image"></div>
+        <div id="blog-content"></div>
+    </div>
 
 	</body>
 
 	<script>
     //when page has fully rendered then execute this code
     $(document).ready(function () {
+
+    //dynamically create a container(?) for each blog so all are displayed in a sequence
+    //following search will then be a 'filter'
 
         $("#search-button").click(function (element) {
             
@@ -42,11 +44,20 @@
             
             $.get(apiSearch, function (data) {
                 //possibly a for loop in here?
-            	var title = JSON.stringify(data.objects[0].title);
-                var author = JSON.stringify(data.objects[0].metadata.author.title);
-                var content = JSON.stringify(data.objects[0].content);
+            	var title = data.objects[0].title;
+                var author = data.objects[0].metadata.author.title;
+                var createdDate = data.objects[0].created_at;
+                // var image = data.objects[0].metadata.hero.url;
+                var image = new Image();
+                image.setAttribute("src", data.objects[0].metadata.hero.url);
+                document.getElementById("blog-image").appendChild(image);
+                var content = data.objects[0].content;
 
-            	$("#blogs").html("<br>" + title + "<br>" + "<br>" + author + "<br>" + content);
+            	$("#blog-title").html(title);
+                $("#blog-author").html(author);
+                $("#blog-createdDate").html(createdDate);
+                $("#blog-image").html(image);
+                $("#blog-content").html(content);
                 console.log('query finished, got', data);
             });
     	});
@@ -54,16 +65,7 @@
 
     //TODO - show all blogs as standard and change search to filter
     //TODO - ability to return multiple search results (just [0] at present)
-    //TODO - html divs and style sheet to show JSON property values differently (Title, Author, etc)
     //TODO - Add elements to display author pic and details
 
     </script>
 </html>
-
-<!-- set up divs so that we have...
-div for blog title
-div for blog author
-div for blog content
-
-hopefully these div types or whatever they are can be set up as common components
-then need to repeat for n blogs -->

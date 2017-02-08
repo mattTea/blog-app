@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<title>the t-shaped BA</title>
-	</head>
+    <head>
+        <meta charset="utf-8"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <title>the t-shaped BA</title>
+    </head>
 
-	<body>
-	<h1>the tea-shaped business analyst</h1>
-	<p>chatting about my experiences whilst learning to code. and still trying to be a business analyst.</p>
+    <body>
+    <h1>the tea-shaped business analyst</h1>
+    <p>chatting about my experiences whilst learning to code. and still trying to be a business analyst.</p>
 
-	<h2>the blogs...</h2>
-	
-	<input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
-	<button id="search-button">Search</button>
-	
+    <h2>the blogs...</h2>
+    
+    <input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
+    <button id="search-button">Search</button>
+    
     <div id="blogs">
         <div id="blog-title" style="color:darkgreen;font-size:200%;font-weight:bold;margin:25px;text-align:center"></div>
         <div id="blog-author" style="font-weight:bold;text-align:center"></div>
@@ -23,9 +23,9 @@
         <div id="blog-content"></div>
     </div>
 
-	</body>
+    </body>
 
-	<script>
+    <script>
     //when page has fully rendered then execute this code
     $(document).ready(function () {
 
@@ -35,34 +35,46 @@
         $("#search-button").click(function (element) {
             
             //get blogs from input box
-            var articleHeadlineSearch = $("#blog-search-box").val().toLowerCase();
-            console.log('articleHeadlineSearch:', articleHeadlineSearch);
+            var articleSearch = $("#blog-search-box").val().toLowerCase();
+            console.log('articleSearch:', articleSearch);
 
-            //query backend api and render the result
-            var apiSearch = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=search&metafield_value_has=" + articleHeadlineSearch;
+            //query api and render the result
+            var apiSearch = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=search&metafield_value_has=" + articleSearch;
             console.log('querying api...');
             
             $.get(apiSearch, function (data) {
-                //possibly a for loop in here?
-            	var title = data.objects[0].title;
-                var author = data.objects[0].metadata.author.title;
-                var createdDate = data.objects[0].created_at;
-                // var image = data.objects[0].metadata.hero.url;
-                var image = new Image();
-                image.setAttribute("src", data.objects[0].metadata.hero.url);
-                document.getElementById("blog-image").appendChild(image);
-                var content = data.objects[0].content;
+                if (!!data.objects) {
+                //     for (var i = 0; i < data.length; i++) {
+                // if (data.objects[0].metadata.search.includes(articleSearch) === true) { //cannot read 0 of undefined
+                    var title = data.objects[0].title;
+                    var author = data.objects[0].metadata.author.title;
+                    var createdDate = data.objects[0].created_at;
+                    var image = new Image();
+                    image.setAttribute("src", data.objects[0].metadata.hero.url);
+                    document.getElementById("blog-image").appendChild(image);
+                    var content = data.objects[0].content;
 
-            	$("#blog-title").html(title);
-                $("#blog-author").html(author);
-                $("#blog-createdDate").html(createdDate);
-                $("#blog-image").html(image);
-                $("#blog-content").html(content);
-                console.log('query finished, got', data);
+                    $("#blog-title").html(title);
+                    $("#blog-author").html(author);
+                    $("#blog-createdDate").html(createdDate);
+                    $("#blog-image").html(image);
+                    $("#blog-content").html(content);
+                    console.log('query finished, got', data);                      
+                } else {
+                    $("#blog-title").empty();
+                    $("#blog-author").empty();
+                    $("#blog-createdDate").empty();
+                    $("#blog-image").empty();
+                    $("#blog-content").empty();
+
+                    $("#blog-content").append('Sorry, article not found. Please search by title or author.');
+                    console.log('query finished, no article found');
+                }
             });
-    	});
+        });
     });
 
+    //TODO - show images at a sensible size!
     //TODO - show all blogs as standard and change search to filter
     //TODO - ability to return multiple search results (just [0] at present)
     //TODO - Add elements to display author pic and details

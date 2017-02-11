@@ -11,6 +11,10 @@
     <p>chatting about my experiences whilst learning to code. and still trying to be a business analyst.</p>
 
     <h2>the blogs...</h2>
+
+    <table id="index"><!-- show dynamic table of blog titles -->
+        <tr></tr>
+    </table>
     
     <input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
     <button id="search-button">Search</button>
@@ -29,7 +33,27 @@
     //when page has fully rendered then execute this code
     $(document).ready(function () {
 
-        //somewhere here I want to populate divs with latest blog post on first page load
+        //display index of blog titles
+        var blogIndex = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
+        $.get(blogIndex, function (data) {
+            var tr;
+            if (data.objects.length > 0) {
+                console.log('we definitely have some blog index data');
+                for (var i = 0; i < data.objects.length; i++) {
+                    var table = document.getElementById("index");                           
+                    tr = $('<tr/>');
+                    tr.append("<td>" + data.objects[i].title + "</td>");
+                    $("#index").append(tr);
+                    console.log('query finished, got', data);
+                }
+            } else {
+                $("#index").empty();
+                $("#index").append('Oops! Something went wrong, no blogs found.');
+                console.log('query finished, no blogs found');                
+            }
+        });
+
+        //display latest blog on first page load
         var latestBlog = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
         $.get(latestBlog, function (data) {
             var latestTitle = data.objects[0].title;
@@ -47,7 +71,7 @@
             console.log('latest blog returned, got', data);
         });
 
-        //dynamically create a container(?) for each blog so all are displayed in a sequence
+        //dynamically create a container(?) for each blog so all are displayed in a sequence (latest 3?)
         //following search will then be a 'filter'
 
         $("#search-button").click(function (element) {
@@ -92,9 +116,13 @@
         });
     });
 
+    //TODO - index of all blogs maybe on right of the page
+        //first just show titles
+        //then make hyperlinked
     //TODO - show images at a sensible size!
     //TODO - show all blogs (or last 3 maybe) as standard and change search to filter
     //TODO - ability to return multiple search results (just [0] at present)
+    //TODO - ability for viewers to add comments to a blog (api to link in a db somehow)
     //TODO - Add elements to display author pic and details
 
     </script>

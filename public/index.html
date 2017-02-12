@@ -4,27 +4,82 @@
         <meta charset="utf-8"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <title>the t-shaped BA</title>
+
+        <style>
+
+        div.container {
+            width: 100%;
+            border: 1px solid gray;
+        }
+
+        header {
+            padding: 1em;
+            color: white;
+            /*background-color: black;*/
+            background: url("t-shaped-blog.JPG") black;
+            clear: left;
+            text-align: left;
+        }
+
+        footer {
+            padding: 1em;
+            color: white;
+            background-color: black;
+            clear: left;
+            text-align: center;
+        }
+
+        #blog-index {
+            float: right;
+            max-width: 310px;
+            margin: 0;
+            padding: 1em;
+        }
+
+        article {
+            min-height: 300px;
+            margin-right: 310px;
+            border-right: 1px solid gray;
+            padding: 1em;
+            overflow: hidden;
+        }
+        </style>
+
     </head>
 
     <body>
-    <h1>the tea-shaped business analyst</h1>
-    <p>chatting about my experiences whilst learning to code. and still trying to be a business analyst.</p>
 
-    <h2>the blogs...</h2>
+    <div class="container">
 
-    <table id="index"><!-- show dynamic table of blog titles -->
-        <tr></tr>
-    </table>
-    
-    <input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
-    <button id="search-button">Search</button>
-    
-    <div id="blogs">
-        <div id="blog-title" style="color:darkgreen;font-size:200%;font-weight:bold;margin:25px;text-align:center"></div>
-        <div id="blog-author" style="font-weight:bold;text-align:center"></div>
-        <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
-        <div id="blog-image" style="display:block;text-align:center;padding-top:10px;padding-bottom:10px"></div>
-        <div id="blog-content" style="padding-top:10px;padding-right:30px;padding-bottom:10px;padding-left:30px"></div>
+        <header>
+           <h1>the tea-shaped business analyst</h1>
+           <p>chatting about my experiences whilst learning to code. and still trying to be a business analyst.</p>
+        </header>
+          
+        <div id="blog-index">
+        <h3>the blogs...</h3>
+        <input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
+        <button id="search-button">Search</button>       
+        <table id="index" style="padding-top:1em"><!-- show dynamic table of blog titles -->
+            <tr></tr>
+        </table>
+        </div>
+
+        <article>
+        
+        <div id="blogs">
+            <div id="blog-title" style="color:saddlebrown;font-size:200%;font-weight:bold;margin:25px;text-align:center"></div>
+            <div id="blog-author" style="font-weight:bold;text-align:center"></div>
+            <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
+            <div id="blog-image" style="display:block;text-align:center;padding-top:10px;padding-bottom:10px"></div>
+            <div id="blog-content" style="padding-top:10px;padding-right:30px;padding-bottom:10px;padding-left:30px"></div>
+
+        </div>
+
+        </article>
+
+        <footer>mattTea business analysis</footer>
+
     </div>
 
     </body>
@@ -71,9 +126,6 @@
             console.log('latest blog returned, got', data);
         });
 
-        //dynamically create a container(?) for each blog so all are displayed in a sequence (latest 3?)
-        //following search will then be a 'filter'
-
         $("#search-button").click(function (element) {
             
             //get blogs from input box
@@ -86,8 +138,6 @@
             
             $.get(apiSearch, function (data) {
                 if (!!data.objects) {
-                //     for (var i = 0; i < data.length; i++) {
-                // if (data.objects[0].metadata.search.includes(articleSearch) === true) { //cannot read 0 of undefined
                     var title = data.objects[0].title;
                     var author = data.objects[0].metadata.author.title;
                     var createdDate = data.objects[0].created_at;
@@ -116,12 +166,8 @@
         });
     });
 
-    //TODO - index of all blogs maybe on right of the page
-        //first just show titles
-        //then make hyperlinked
+    //TODO - make index hyperlinked
     //TODO - show images at a sensible size!
-    //TODO - show all blogs (or last 3 maybe) as standard and change search to filter
-    //TODO - ability to return multiple search results (just [0] at present)
     //TODO - ability for viewers to add comments to a blog (api to link in a db somehow)
     //TODO - Add elements to display author pic and details
 

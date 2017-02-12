@@ -15,7 +15,6 @@
         header {
             padding: 1em;
             color: white;
-            /*background-color: black;*/
             background: url("t-shaped-blog.JPG") black;
             clear: left;
             text-align: left;
@@ -32,7 +31,9 @@
         #blog-index {
             float: right;
             max-width: 310px;
-            margin: 0;
+            color:darkslategrey;
+            font-size:15px;
+            margin-right: 30px;
             padding: 1em;
         }
 
@@ -60,7 +61,7 @@
         <h3>the blogs...</h3>
         <input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
         <button id="search-button">Search</button>       
-        <table id="index" style="padding-top:1em"><!-- show dynamic table of blog titles -->
+        <table id="index" style="padding-top:1em;padding-bottom:1em"><!-- show dynamic table of blog titles -->
             <tr></tr>
         </table>
         </div>
@@ -167,7 +168,6 @@
     });
 
     //TODO - make index hyperlinked
-    //TODO - show images at a sensible size!
     //TODO - ability for viewers to add comments to a blog (api to link in a db somehow)
     //TODO - Add elements to display author pic and details
 

@@ -62,7 +62,11 @@
         <input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
         <button id="search-button">Search</button>       
         <table id="index" style="padding-top:1em;padding-bottom:1em"><!-- show dynamic table of blog titles -->
-            <tr></tr>
+            <tr>
+                <td>
+                    <a id="blog-link"></a>
+                </td>
+            </tr>
         </table>
         </div>
 
@@ -94,14 +98,12 @@
         $.get(blogIndex, function (data) {
             var tr;
             if (data.objects.length > 0) {
-                console.log('we definitely have some blog index data');
-                for (var i = 0; i < data.objects.length; i++) {
-                    var table = document.getElementById("index");                           
+                for (var i = 0; i < data.objects.length; i++) {                         
                     tr = $('<tr/>');
-                    tr.append("<td>" + data.objects[i].title + "</td>");
+                    tr.append("<td>" + data.objects[i].title + "</td>");    
                     $("#index").append(tr);
-                    console.log('query finished, got', data);
                 }
+                console.log('index query finished, got', data);
             } else {
                 $("#index").empty();
                 $("#index").append('Oops! Something went wrong, no blogs found.');
@@ -144,7 +146,6 @@
                     var createdDate = data.objects[0].created_at;
                     var image = new Image();
                     image.setAttribute("src", data.objects[0].metadata.hero.url);
-                    document.getElementById("blog-image").appendChild(image);
                     var content = data.objects[0].content;
 
                     $("#blog-title").html(title);

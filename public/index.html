@@ -59,7 +59,7 @@
           
         <div id="blog-index">
         <h3>the blogs...</h3>
-        <input id="blog-search-box" type="text" placeholder="Search titles & authors"/>
+        <input id="blog-search-box" type="text" placeholder="Search titles"/>
         <button id="search-button">Search</button>       
         <table id="index" style="cursor:pointer;padding-top:1em;padding-bottom:1em"><!-- show dynamic table of blog titles -->
             <tr></tr>
@@ -122,13 +122,14 @@
                     var title = data.objects[0].title;
                     var author = data.objects[0].metadata.author.title;
                     var createdDate = data.objects[0].created_at;
+                    var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
                     var image = new Image();
                     image.setAttribute("src", data.objects[0].metadata.hero.url);
                     var content = data.objects[0].content;
 
                     $("#blog-title").html(title);
                     $("#blog-author").html(author);
-                    $("#blog-createdDate").html(createdDate);
+                    $("#blog-createdDate").html(displayDate);
                     $("#blog-image").html(image);
                     $("#blog-content").html(content);
                     console.log('query finished, got', data);                      
@@ -139,7 +140,7 @@
                     $("#blog-image").empty();
                     $("#blog-content").empty();
 
-                    $("#blog-content").append('Sorry, that link didn\'t work. Please try searching by title or author.');
+                    $("#blog-content").append('Sorry, that link didn\'t work. Please try searching by title.');
                     console.log('query finished, no article found');
                 }
             });                        
@@ -151,13 +152,14 @@
             var latestTitle = data.objects[0].title;
             var latestAuthor = data.objects[0].metadata.author.title;
             var latestCreatedDate = data.objects[0].created_at;
+            var latestDisplayDate = latestCreatedDate.charAt(8) + latestCreatedDate.charAt(9) + '/' + latestCreatedDate.charAt(5) + latestCreatedDate.charAt(6) + '/' + latestCreatedDate.charAt(0) + latestCreatedDate.charAt(1) + latestCreatedDate.charAt(2) + latestCreatedDate.charAt(3);
             var latestImage = new Image();
             latestImage.setAttribute("src", data.objects[0].metadata.hero.url);
             var latestContent = data.objects[0].content;
 
             $("#blog-title").html(latestTitle);
             $("#blog-author").html(latestAuthor);
-            $("#blog-createdDate").html(latestCreatedDate);
+            $("#blog-createdDate").html(latestDisplayDate);
             $("#blog-image").html(latestImage);
             $("#blog-content").html(latestContent);
             console.log('latest blog returned, got', data);
@@ -178,13 +180,14 @@
                     var title = data.objects[0].title;
                     var author = data.objects[0].metadata.author.title;
                     var createdDate = data.objects[0].created_at;
+                    var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
                     var image = new Image();
                     image.setAttribute("src", data.objects[0].metadata.hero.url);
                     var content = data.objects[0].content;
 
                     $("#blog-title").html(title);
                     $("#blog-author").html(author);
-                    $("#blog-createdDate").html(createdDate);
+                    $("#blog-createdDate").html(displayDate);
                     $("#blog-image").html(image);
                     $("#blog-content").html(content);
                     console.log('query finished, got', data);                      
@@ -195,7 +198,7 @@
                     $("#blog-image").empty();
                     $("#blog-content").empty();
 
-                    $("#blog-content").append('Sorry, article not found. Please search by title or author.');
+                    $("#blog-content").append('Sorry, article not found. Please try again or click on a listed title.');
                     console.log('query finished, no article found');
                 }
             });

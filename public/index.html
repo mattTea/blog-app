@@ -97,40 +97,6 @@
                 for (var i = 0; i < data.objects.length; i++) {                         
                     tr = $('<tr/>');
                     tr.append("<td>" + data.objects[i].title + "</td>");
-                    
-                    $('#index').on('click', 'tr', function() {
-                        console.log('You clicked row '+ ($(this).index()));
-                        //add blog display function here
-                        var blogIndexClick = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + tr;   //need text from tr
-
-                        $.get(blogIndexClick, function (data) {
-                            if (!!data.objects) {
-                                var title = data.objects[0].title;
-                                var author = data.objects[0].metadata.author.title;
-                                var createdDate = data.objects[0].created_at;
-                                var image = new Image();
-                                image.setAttribute("src", data.objects[0].metadata.hero.url);
-                                var content = data.objects[0].content;
-
-                                $("#blog-title").html(title);
-                                $("#blog-author").html(author);
-                                $("#blog-createdDate").html(createdDate);
-                                $("#blog-image").html(image);
-                                $("#blog-content").html(content);
-                                console.log('query finished, got', data);                      
-                            } else {
-                                $("#blog-title").empty();
-                                $("#blog-author").empty();
-                                $("#blog-createdDate").empty();
-                                $("#blog-image").empty();
-                                $("#blog-content").empty();
-
-                                $("#blog-content").append('Sorry, article link didn\'t work. Please search by title or author.');
-                                console.log('query finished, no article found');
-                            }
-                        });                        
-
-                    });
                     $("#index").append(tr);
                 }
                 console.log('index query finished, got', data);
@@ -139,6 +105,48 @@
                 $("#index").append('Oops! Something went wrong, no blogs found.');
                 console.log('query finished, no blogs found');                
             }
+        });
+        
+        //blog display on click
+        $('#index').on('click', 'tr', function() {
+            var thisRow = ($(this).index());
+            console.log('You clicked row ' + thisRow);
+            
+            // var table = document.getElementById("index") 
+            // var row = table.rows.item[thisRow];
+            // var col = thisRow.cells.item[0];
+            // var cellText = thisRow.innerText;
+            var cellText = 'Bonus blog 1';
+
+            var blogIndexClick = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + cellText;   //need text from tr
+
+            $.get(blogIndexClick, function (data) {
+                if (!!data.objects) {
+                    var title = data.objects[0].title;
+                    var author = data.objects[0].metadata.author.title;
+                    var createdDate = data.objects[0].created_at;
+                    var image = new Image();
+                    image.setAttribute("src", data.objects[0].metadata.hero.url);
+                    var content = data.objects[0].content;
+
+                    $("#blog-title").html(title);
+                    $("#blog-author").html(author);
+                    $("#blog-createdDate").html(createdDate);
+                    $("#blog-image").html(image);
+                    $("#blog-content").html(content);
+                    console.log('query finished, got', data);                      
+                } else {
+                    $("#blog-title").empty();
+                    $("#blog-author").empty();
+                    $("#blog-createdDate").empty();
+                    $("#blog-image").empty();
+                    $("#blog-content").empty();
+
+                    $("#blog-content").append('Sorry, I haven\'t built this feature yet - please search by title or author!');
+                    console.log('query finished, no article found');
+                }
+            });                        
+
         });
 
         //display latest blog on first page load

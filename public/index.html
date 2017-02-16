@@ -107,18 +107,15 @@
             }
         });
         
-        //blog display on click
+        //blog display on index row click
         $('#index').on('click', 'tr', function() {
-            var thisRow = ($(this).index());
-            console.log('You clicked row ' + thisRow);
+            console.log('You clicked row ' + ($(this).index()));
             
-            // var table = document.getElementById("index") 
-            // var row = table.rows.item[thisRow];
-            // var col = thisRow.cells.item[0];
-            // var cellText = thisRow.innerText;
-            var cellText = 'Bonus blog 1';
-
-            var blogIndexClick = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + cellText;   //need text from tr
+            var currentRow = $(this).closest("tr");
+            var cellText = currentRow.find("td:eq(0)").text();
+            console.log('The content of this table row is ' + cellText);
+            
+            var blogIndexClick = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + cellText;
 
             $.get(blogIndexClick, function (data) {
                 if (!!data.objects) {
@@ -142,11 +139,10 @@
                     $("#blog-image").empty();
                     $("#blog-content").empty();
 
-                    $("#blog-content").append('Sorry, I haven\'t built this feature yet - please search by title or author!');
+                    $("#blog-content").append('Sorry, that link didn\'t work. Please try searching by title or author.');
                     console.log('query finished, no article found');
                 }
             });                        
-
         });
 
         //display latest blog on first page load
@@ -206,7 +202,6 @@
         });
     });
 
-    //TODO - make index hyperlinked
     //TODO - ability for viewers to add comments to a blog (api to link in a db somehow)
     //TODO - Add elements to display author pic and details
 

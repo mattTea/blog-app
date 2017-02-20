@@ -35,9 +35,32 @@ app.get('/articles', function(req, res) {
 	});
 });
 
-//https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=Bonus blog 1
-//https://api.cosmicjs.com/v1/matttea-blog-app/object/part-1-a-taster
-//https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value_has=taster
+//POST comments
+
+//***how do I get the jQuery UI input into this file to do the node.js stuff??***
+
+// $("#submit-button").click(function (element) {	//Can't use jQuery syntax
+
+//     var newComment = $("#comments-box").val();
+//     console.log('newComment:', newComment);
+
+//     var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
+//     app.post(apiPost, function(req, res) {
+
+//         var params = {
+//             type_slug: 'comments',
+//             title: 'Comment Title',
+//             content: newComment
+//         };
+//         Cosmic.addObject(config, params, function(error, response) {
+//             res.json(response);
+//             console.log('posting comment to api...');
+//         }, function (e) {
+//             res.status(500).send();
+//         });
+//     });
+// });
+
 
 app.listen(PORT, function() {
 	console.log('Express listening on port ' + PORT + '.');

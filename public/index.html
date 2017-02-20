@@ -74,6 +74,16 @@
             <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
             <div id="blog-image" style="display:block;text-align:center;padding-top:10px;padding-bottom:10px"></div>
             <div id="blog-content" style="padding-top:10px;padding-right:30px;padding-bottom:10px;padding-left:30px"></div>
+            
+            <div id="comments">
+                <div id="comment-header">
+                    <h4>comments...</h4>
+                </div>
+                <div id="comment-date"></div>
+                <div id="blog-comments"></div>
+                <textarea id="comments-box" rows="4" cols="50" placeholder="Add comment..."></textarea>
+                <button id="submit-button">Submit</button> 
+            </div>
 
         </div>
 
@@ -89,6 +99,15 @@
     //when page has fully rendered then execute this code
     $(document).ready(function () {
 
+        // Cosmic config
+        // var Cosmic = require('cosmicjs'); //CAN'T USE node COMMANDS HERE (npm 'Require')
+        // var config = {};
+        // config.bucket = {
+        //     slug: 'matttea-blog-app',
+        //     read_key: 'b0ArYqMiFgGNTU2DubNVsNnySAqQc6cbMDJyiPdQbknX7oI67K',
+        //     write_key: 'quarKdFMTq94uNL0Wg8FetEGVScGLsMzKC9UUQG8bFoa6HiWEw'
+        // };
+        
         //display index of blog titles
         var blogIndex = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
         $.get(blogIndex, function (data) {
@@ -126,6 +145,18 @@
                     var image = new Image();
                     image.setAttribute("src", data.objects[0].metadata.hero.url);
                     var content = data.objects[0].content;
+                    if (!!data.objects[0].metadata.comment) {
+                        var commentDate = data.objects[0].metadata.comment.metafields[0].value;
+                        var comments = data.objects[0].metadata.comment.content;
+                        $("#comments").show();
+                        $("#comment-date").empty();
+                        $("#blog-comments").empty();
+                        $("#comment-date").append(commentDate);
+                        $("#blog-comments").append(comments);                        
+                    } else {
+                        $("#comment-date").empty();
+                        $("#blog-comments").empty();
+                    }
 
                     $("#blog-title").html(title);
                     $("#blog-author").html(author);
@@ -139,6 +170,9 @@
                     $("#blog-createdDate").empty();
                     $("#blog-image").empty();
                     $("#blog-content").empty();
+                    $("#comments").hide();
+                    $("#comment-date").empty();
+                    $("#blog-comments").empty();
 
                     $("#blog-content").append('Sorry, that link didn\'t work. Please try searching by title.');
                     console.log('query finished, no article found');
@@ -156,18 +190,30 @@
             var latestImage = new Image();
             latestImage.setAttribute("src", data.objects[0].metadata.hero.url);
             var latestContent = data.objects[0].content;
+            if (!!data.objects[0].metadata.comment) {
+                var commentDate = data.objects[0].metadata.comment.metafields[0].value;
+                var comments = data.objects[0].metadata.comment.content;
+                $("#comment-date").empty();
+                $("#blog-comments").empty();
+                $("#comment-date").append(commentDate);
+                $("#blog-comments").append(comments);                        
+            } else {
+                $("#comment-date").empty();
+                $("#blog-comments").empty();
+            }
 
             $("#blog-title").html(latestTitle);
             $("#blog-author").html(latestAuthor);
             $("#blog-createdDate").html(latestDisplayDate);
             $("#blog-image").html(latestImage);
             $("#blog-content").html(latestContent);
+
             console.log('latest blog returned, got', data);
         });
 
+        //get blogs from input box
         $("#search-button").click(function (element) {
             
-            //get blogs from input box
             var articleSearch = $("#blog-search-box").val().toLowerCase();
             console.log('articleSearch:', articleSearch);
 
@@ -184,6 +230,18 @@
                     var image = new Image();
                     image.setAttribute("src", data.objects[0].metadata.hero.url);
                     var content = data.objects[0].content;
+                    if (!!data.objects[0].metadata.comment) {
+                        var commentDate = data.objects[0].metadata.comment.metafields[0].value;
+                        var comments = data.objects[0].metadata.comment.content;
+                        $("#comments").show();
+                        $("#comment-date").empty();
+                        $("#blog-comments").empty();
+                        $("#comment-date").append(commentDate);
+                        $("#blog-comments").append(comments);                        
+                    } else {
+                        $("#comment-date").empty();
+                        $("#blog-comments").empty();
+                    }
 
                     $("#blog-title").html(title);
                     $("#blog-author").html(author);
@@ -197,15 +255,40 @@
                     $("#blog-createdDate").empty();
                     $("#blog-image").empty();
                     $("#blog-content").empty();
+                    $("#comments").hide();
+                    $("#comment-date").empty();
+                    $("#blog-comments").empty();
 
                     $("#blog-content").append('Sorry, article not found. Please try again or click on a listed title.');
                     console.log('query finished, no article found');
                 }
             });
         });
+
+        //POST comments
+        // $("#submit-button").click(function (element) {
+            
+        //     var newComment = $("#comments-box").val();
+        //     console.log('newComment:', newComment);
+
+        //     var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
+        //     $.post(apiPost, function(req, res) {
+
+        //         var params = {
+        //             type_slug: 'comments',
+        //             title: 'Comment Title',
+        //             content: newComment
+        //         };
+        //         Cosmic.addObject(config, params, function(error, response) { //only need to push here on in into server.js
+        //             res.json(response);
+        //         }, function (e) {
+        //             res.status(500).send();
+        //         });
+        //     });
+        // });
+
     });
 
-    //TODO - ability for viewers to add comments to a blog (api to link in a db somehow)
     //TODO - Add elements to display author pic and details
 
     </script>

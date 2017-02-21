@@ -265,27 +265,34 @@
             });
         });
 
-        //POST comments
-        // $("#submit-button").click(function (element) {
+        // POST comments
+        $("#submit-button").click(function (element) {
             
-        //     var newComment = $("#comments-box").val();
-        //     console.log('newComment:', newComment);
+            var newComment = $("#comments-box").val();
+            console.log('newComment:', newComment);
 
-        //     var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
-        //     $.post(apiPost, function(req, res) {
+            var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
+            $.post(apiPost, function(req, res) {
 
-        //         var params = {
-        //             type_slug: 'comments',
-        //             title: 'Comment Title',
-        //             content: newComment
-        //         };
-        //         Cosmic.addObject(config, params, function(error, response) { //only need to push here on in into server.js
-        //             res.json(response);
-        //         }, function (e) {
-        //             res.status(500).send();
-        //         });
-        //     });
-        // });
+                //I think this should be a req.body...
+                var params = {
+                    type_slug: 'comments',
+                    title: 'Comment Title',
+                    content: newComment
+                };
+                
+                var paramsJson = JSON.stringify(params);
+
+                
+
+                // I think I need to move the below function to server.js
+                // Cosmic.addObject(config, paramsJson, function(error, response) {
+                //     res.json(response);
+                // }, function (e) {
+                //     res.status(500).send();
+                // });
+            });
+        });
 
     });
 

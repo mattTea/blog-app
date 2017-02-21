@@ -1,0 +1,51 @@
+<script>
+
+(function() {
+  var httpRequest;
+  document.getElementById("submit-button").onclick = function() {
+    makeRequest('https://api.cosmicjs.com/v1/matttea-blog-app/add-object');
+
+    $("#submit-button").click(function (element) {
+        
+        var newComment = $("#comments-box").val();
+        console.log('newComment:', newComment);
+
+    var params = {
+        type_slug: 'comments',
+        title: 'Comment Title',
+        content: newComment
+    };
+    
+    var paramsJson = JSON.stringify(params);
+
+    httpRequest.onreadystatechange = alertContents;
+    httpRequest.open('POST', 'https://api.cosmicjs.com/v1/matttea-blog-app/add-object', true);
+    httpRequest.send(paramsJson);
+    }
+
+  };
+
+  function makeRequest(url) {
+    httpRequest = new XMLHttpRequest();
+
+    if (!httpRequest) {
+      alert('Giving up :( Cannot create an XMLHTTP instance');
+      return false;
+    }
+
+
+
+  }
+
+  function alertContents() {
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      if (httpRequest.status === 200) {
+        alert(httpRequest.responseText);
+      } else {
+        alert('There was a problem with the request.');
+      }
+    }
+  }
+})();
+
+</script>

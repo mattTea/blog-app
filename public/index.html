@@ -83,10 +83,9 @@
                 <div id="blog-comments"></div><br><br>
             </div>
 
-            <form id="newComment"><!--  action="/server.js" action="OnAction()" method="post"> -->
+            <form id="newComment" method="post">
                 <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="Add comment..."></textarea>                
-                <!-- <input type="submit" value="Submit"> -->
-                <button id="submit-button">Submit</button>
+                <input type="submit" value="Submit">
             </form>
 
             <!-- <div id="comments">
@@ -269,24 +268,8 @@
                 }
             });
         });
-
-        // POST comments (to server.js)
-        $("#submit-button").click(function (element) {
-        
-            var newComment = $("#comments-box").val();
-            console.log('newComment:', newComment);
-
-            var commentParams = {
-                type_slug: 'comments',
-                title: 'Comment Title',
-                content: newComment
-            };
-            
-            var commentParamsJson = JSON.stringify(commentParams);
-            console.log(commentParamsJson);
-
-        });
     });
+      
 
     //TODO - Add elements to display author pic and details
 

@@ -78,12 +78,26 @@
             <div id="comments">
                 <div id="comment-header">
                     <h4>comments...</h4>
+                </div>                
+                <div id="comment-date"></div>
+                <div id="blog-comments"></div><br><br>
+            </div>
+
+            <form id="newComment"><!--  action="/server.js" action="OnAction()" method="post"> -->
+                <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="Add comment..."></textarea>                
+                <!-- <input type="submit" value="Submit"> -->
+                <button id="submit-button">Submit</button>
+            </form>
+
+            <!-- <div id="comments">
+                <div id="comment-header">
+                    <h4>comments...</h4>
                 </div>
                 <div id="comment-date"></div>
                 <div id="blog-comments"></div>
                 <textarea id="comments-box" rows="4" cols="50" placeholder="Add comment..."></textarea>
                 <button id="submit-button">Submit</button> 
-            </div>
+            </div> -->
 
         </div>
 
@@ -98,15 +112,6 @@
     <script>
     //when page has fully rendered then execute this code
     $(document).ready(function () {
-
-        // Cosmic config
-        // var Cosmic = require('cosmicjs'); //CAN'T USE node COMMANDS HERE (npm 'Require')
-        // var config = {};
-        // config.bucket = {
-        //     slug: 'matttea-blog-app',
-        //     read_key: 'b0ArYqMiFgGNTU2DubNVsNnySAqQc6cbMDJyiPdQbknX7oI67K',
-        //     write_key: 'quarKdFMTq94uNL0Wg8FetEGVScGLsMzKC9UUQG8bFoa6HiWEw'
-        // };
         
         //display index of blog titles
         var blogIndex = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
@@ -265,35 +270,22 @@
             });
         });
 
-        // POST comments
+        // POST comments (to server.js)
         $("#submit-button").click(function (element) {
-            
+        
             var newComment = $("#comments-box").val();
             console.log('newComment:', newComment);
 
-            var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
-            $.post(apiPost, function(req, res) {
+            var commentParams = {
+                type_slug: 'comments',
+                title: 'Comment Title',
+                content: newComment
+            };
+            
+            var commentParamsJson = JSON.stringify(commentParams);
+            console.log(commentParamsJson);
 
-                //I think this should be a req.body...
-                var params = {
-                    type_slug: 'comments',
-                    title: 'Comment Title',
-                    content: newComment
-                };
-                
-                var paramsJson = JSON.stringify(params);
-
-                
-
-                // I think I need to move the below function to server.js
-                // Cosmic.addObject(config, paramsJson, function(error, response) {
-                //     res.json(response);
-                // }, function (e) {
-                //     res.status(500).send();
-                // });
-            });
         });
-
     });
 
     //TODO - Add elements to display author pic and details

@@ -280,7 +280,7 @@
             
             var commentParams = {
                 type_slug: 'comments',
-                title: 'Comment Title',
+                title: 'comment-title', //try to increment a number on end of this to make unique comment titles
                 content: newComment
             };            
 
@@ -291,30 +291,31 @@
             console.log('commentParamsJson: ' + commentParamsJson);
             $("#comments-box").val('');
 
-            //need code to add this comment in the current page article's metafield "comment"
-            //think will need to do a PUT / request to amend the current page article object 'comment' metafield
-            
-            // var currentBlog = //need to get the id (or something) of the current blog
-            // var commentId = //need to get the above comment's "value" or "object._id" from json
-            // var articleCommentParams = {
-            //     {
-            //         slug: currentBlog,
-            //         title: "New Comment Link",
-            //         content: "New comment added",
-            //         metafields: [
+            //PUT request to amend the current blog object 'comment' metafield            
+            // var currentComment = commentParams.title;
+            // var apiCommentGet = "https://api.cosmicjs.com/v1/object/" + currentComment;
+            // $.get(apiCommentGet, function (data) {
+            //     if (!!data.objects) {
+            //         var currentBlogSlug = //slug of the current blog (automatically global variable for this?)
+            //         var commentId = data.object._id;            
+            //         var articleCommentParams = {
             //             {
-            //                 title: "comment",
-            //                 key: "comment",
-            //                 value: commentId,
-            //                 type: "text"
+            //                 slug: currentBlogSlug,
+            //                 metafields: [
+            //                     {
+            //                         title: "comment",
+            //                         key: "comment",
+            //                         value: commentId,
+            //                         type: "object"
+            //                     }
+            //                 ]
             //             }
-            //         ]
+            //         };
+
+            //         var apiPut = "https://api.cosmicjs.com/v1/matttea-blog-app/edit-object";
+            //         $.put(apiPut, articleCommentParams);
             //     }
-            // };
-
-            // var apiPut = "https://api.cosmicjs.com/v1/matttea-blog-app/edit-object";
-            // $.put(apiPut, articleCommentParams);
-
+            // });
         });  
     });
       

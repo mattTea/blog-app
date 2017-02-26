@@ -111,7 +111,8 @@
     <script>
     //when page has fully rendered then execute this code
     $(document).ready(function () {
-        
+        var currentBlogSlug;
+
         //display index of blog titles
         var blogIndex = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
         $.get(blogIndex, function (data) {
@@ -149,6 +150,7 @@
                     var image = new Image();
                     image.setAttribute("src", data.objects[0].metadata.hero.url);
                     var content = data.objects[0].content;
+                    currentBlogSlug = data.objects[0].slug;
                     if (!!data.objects[0].metadata.comment) {
                         var rawCommentDate = data.objects[0].metadata.comment.created_at;
                         var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
@@ -195,6 +197,7 @@
             var latestImage = new Image();
             latestImage.setAttribute("src", data.objects[0].metadata.hero.url);
             var latestContent = data.objects[0].content;
+            currentBlogSlug = data.objects[0].slug;
             if (!!data.objects[0].metadata.comment) {
                 var rawCommentDate = data.objects[0].metadata.comment.created_at;
                 var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
@@ -236,6 +239,7 @@
                     var image = new Image();
                     image.setAttribute("src", data.objects[0].metadata.hero.url);
                     var content = data.objects[0].content;
+                    currentBlogSlug = data.objects[0].slug;
                     if (!!data.objects[0].metadata.comment) {
                         var rawCommentDate = data.objects[0].metadata.comment.created_at;
                         var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
@@ -290,32 +294,47 @@
             var commentParamsJson = JSON.stringify(commentParams);
             console.log('commentParamsJson: ' + commentParamsJson);
             $("#comments-box").val('');
+            //WORKING UP TO HERE!
 
-            //PUT request to amend the current blog object 'comment' metafield            
-            // var currentComment = commentParams.title;
-            // var apiCommentGet = "https://api.cosmicjs.com/v1/object/" + currentComment;
-            // $.get(apiCommentGet, function (data) {
-            //     if (!!data.objects) {
-            //         var currentBlogSlug = //slug of the current blog (automatically global variable for this?)
-            //         var commentId = data.object._id;            
-            //         var articleCommentParams = {
-            //             {
-            //                 slug: currentBlogSlug,
-            //                 metafields: [
-            //                     {
-            //                         title: "comment",
-            //                         key: "comment",
-            //                         value: commentId,
-            //                         type: "object"
-            //                     }
-            //                 ]
-            //             }
-            //         };
+            // PUT request to amend the current blog object 'comment' metafield            
+            var currentComment = commentParams.title;
+            console.log(currentComment);
+            var apiCommentGet = "https://api.cosmicjs.com/v1/matttea-blog-app/object/" + currentComment;
+            $.get(apiCommentGet, function (data) {
+                if (!!data.object) {
+                    // var currentBlogSlug = //slug of the current blog (automatically global variable for this?)
+                    var commentValue = data.object.title;
+                    console.log('commentValue: ' + commentValue);
+                    var articleCommentParams =
+                        {
+                            slug: "part-2-the-beginnings-of-addiction", //currentBlogSlug (hard-coded slug for test)
+                            metafields: [
+                                {
+                                    title: "comment",
+                                    key: "comment",
+                                    value: commentValue,
+                                    type: "object"
+                                }
+                            ]
+                        }
 
-            //         var apiPut = "https://api.cosmicjs.com/v1/matttea-blog-app/edit-object";
-            //         $.put(apiPut, articleCommentParams);
-            //     }
-            // });
+                    var articleCommentParamsJson = JSON.stringify(articleCommentParams);
+                    console.log('articleCommentParamsJson: ' + articleCommentParamsJson);
+
+                    var apiPut = "https://api.cosmicjs.com/v1/matttea-blog-app/edit-object";
+                    // $.put(apiPut, articleCommentParams); //$.put is not a jQuery function
+
+                    $.ajax({
+                        url: apiPut,                //Your api url
+                        type: 'PUT',                //type is any HTTP method
+                        data: articleCommentParams, //Data as js object
+                        success: function(){
+                            console.log('PUT action complete');
+                        }
+                    });
+
+                }
+            });
         });  
     });
       

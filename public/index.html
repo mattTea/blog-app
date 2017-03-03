@@ -1,346 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <title>the t-shaped BA</title>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="../style.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<title>the t-shaped BA</title>
 
-        <style>
+<style>
 
-        div.container {
-            width: 100%;
-            border: 1px solid gray;
-        }
 
-        header {
-            padding: 1em;
-            color: white;
-            background: url("t-shaped-blog.JPG") black;
-            clear: left;
-            text-align: left;
-        }
 
-        footer {
-            padding: 1em;
-            color: white;
-            background-color: black;
-            clear: left;
-            text-align: center;
-        }
 
-        #blog-index {
-            float: right;
-            max-width: 310px;
-            color:darkslategrey;
-            font-size:15px;
-            margin-right: 30px;
-            padding: 1em;
-        }
 
-        article {
-            min-height: 300px;
-            margin-right: 310px;
-            border-right: 1px solid gray;
-            padding: 1em;
-            overflow: hidden;
-        }
-        </style>
+</style>
+</head>
 
-    </head>
+<body>
 
-    <body>
+<!-- Navigation -->
+<nav>
+  <ul class="w3-navbar w3-black"><!-- get own class identifiers from style.css -->
+    <li><a href="javascript:void(0)">Home</a></li>
+    <li><a href="javascript:void(0)">Blogs</a></li>
+    <li><a href="javascript:void(0)">Author Bio</a></li>
+    <li><a href="javascript:void(0)">Search</a></li>
+    <li><a href="javascript:void(0)">Contact</a></li>
+  </ul>
+</nav>
 
-    <div class="container">
 
-        <header>
-           <h1>the tea-shaped business analyst</h1>
-           <p>chatting about my experiences whilst learning to code. and still trying to be a business analyst.</p>
-        </header>
-          
-        <div id="blog-index">
-        <h3>the blogs...</h3>
-        <input id="blog-search-box" type="text" placeholder="Search titles"/>
-        <button id="search-button">Search</button>       
-        <table id="index" style="cursor:pointer;padding-top:1em;padding-bottom:1em"><!-- show dynamic table of blog titles -->
-            <tr></tr>
-        </table>
-        </div>
 
-        <article>
-        
-        <div id="blogs">
-            <div id="blog-title" style="color:saddlebrown;font-size:200%;font-weight:bold;margin:25px;text-align:center"></div>
-            <div id="blog-author" style="font-weight:bold;text-align:center"></div>
-            <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
-            <div id="blog-image" style="display:block;text-align:center;padding-top:10px;padding-bottom:10px"></div>
-            <div id="blog-content" style="padding-top:10px;padding-right:30px;padding-bottom:10px;padding-left:30px"></div>
-            
-            <!-- <div id="comments">
-                <div id="comment-header">
-                    <h4>comments...</h4>
-                </div>                
-                <div id="comment-date"></div>
-                <div id="blog-comments"></div><br><br>
-            </div>
 
-            <form id="newComment" method="post">
-                <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="Add comment..."></textarea>                
-                <input type="submit" value="Submit">
-            </form> -->
 
-            <div id="comments">
-                <div id="comment-header">
-                    <h4>comments...</h4>
-                </div>
-                <div id="comment-date"></div>
-                <div id="blog-comments"></div>
-                <textarea id="comments-box" rows="4" cols="50" placeholder="Add comment..."></textarea>
-                <button id="submit-button">Submit</button> 
-            </div>
 
-        </div>
+</body>
 
-        </article>
-
-        <footer>mattTea business analysis</footer>
-
-    </div>
-
-    </body>
-
-    <script>
-    //when page has fully rendered then execute this code
-    $(document).ready(function () {
-        var currentBlogSlug;
-
-        //display index of blog titles
-        var blogIndex = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
-        $.get(blogIndex, function (data) {
-            var tr;
-            if (data.objects.length > 0) {
-                for (var i = 0; i < data.objects.length; i++) {                         
-                    tr = $('<tr/>');
-                    tr.append("<td>" + data.objects[i].title + "</td>");
-                    $("#index").append(tr);
-                }
-                console.log('index query finished, got', data);
-            } else {
-                $("#index").empty();
-                $("#index").append('Oops! Something went wrong, no blogs found.');
-                console.log('query finished, no blogs found');                
-            }
-        });
-        
-        //blog display on index row click
-        $('#index').on('click', 'tr', function() {
-            console.log('You clicked row ' + ($(this).index()));
-            
-            var currentRow = $(this).closest("tr");
-            var cellText = currentRow.find("td:eq(0)").text();
-            console.log('The content of this table row is ' + cellText);
-            
-            var blogIndexClick = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + cellText;
-
-            $.get(blogIndexClick, function (data) {
-                if (!!data.objects) {
-                    var title = data.objects[0].title;
-                    var author = data.objects[0].metadata.author.title;
-                    var createdDate = data.objects[0].created_at;
-                    var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
-                    var image = new Image();
-                    image.setAttribute("src", data.objects[0].metadata.hero.url);
-                    var content = data.objects[0].content;
-                    currentBlogSlug = data.objects[0].slug;
-                    if (!!data.objects[0].metadata.comment) {
-                        var rawCommentDate = data.objects[0].metadata.comment.created_at;
-                        var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
-                        var comments = data.objects[0].metadata.comment.content;
-                        $("#comments").show();
-                        $("#comment-date").empty();
-                        $("#blog-comments").empty();
-                        $("#comment-date").append(commentDate);
-                        $("#blog-comments").append(comments);                        
-                    } else {
-                        $("#comment-date").empty();
-                        $("#blog-comments").empty();
-                    }
-
-                    $("#blog-title").html(title);
-                    $("#blog-author").html(author);
-                    $("#blog-createdDate").html(displayDate);
-                    $("#blog-image").html(image);
-                    $("#blog-content").html(content);
-                    console.log('query finished, got', data);                      
-                } else {
-                    $("#blog-title").empty();
-                    $("#blog-author").empty();
-                    $("#blog-createdDate").empty();
-                    $("#blog-image").empty();
-                    $("#blog-content").empty();
-                    $("#comments").hide();
-                    $("#comment-date").empty();
-                    $("#blog-comments").empty();
-
-                    $("#blog-content").append('Sorry, that link didn\'t work. Please try searching by title.');
-                    console.log('query finished, no article found');
-                }
-            });                        
-        });
-
-        //display latest blog on first page load
-        var latestBlog = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
-        $.get(latestBlog, function (data) {
-            var latestTitle = data.objects[0].title;
-            var latestAuthor = data.objects[0].metadata.author.title;
-            var latestCreatedDate = data.objects[0].created_at;
-            var latestDisplayDate = latestCreatedDate.charAt(8) + latestCreatedDate.charAt(9) + '/' + latestCreatedDate.charAt(5) + latestCreatedDate.charAt(6) + '/' + latestCreatedDate.charAt(0) + latestCreatedDate.charAt(1) + latestCreatedDate.charAt(2) + latestCreatedDate.charAt(3);
-            var latestImage = new Image();
-            latestImage.setAttribute("src", data.objects[0].metadata.hero.url);
-            var latestContent = data.objects[0].content;
-            currentBlogSlug = data.objects[0].slug;
-            if (!!data.objects[0].metadata.comment) {
-                var rawCommentDate = data.objects[0].metadata.comment.created_at;
-                var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
-                var comments = data.objects[0].metadata.comment.content;
-                $("#comment-date").empty();
-                $("#blog-comments").empty();
-                $("#comment-date").append(commentDate);
-                $("#blog-comments").append(comments);                        
-            } else {
-                $("#comment-date").empty();
-                $("#blog-comments").empty();
-            }
-
-            $("#blog-title").html(latestTitle);
-            $("#blog-author").html(latestAuthor);
-            $("#blog-createdDate").html(latestDisplayDate);
-            $("#blog-image").html(latestImage);
-            $("#blog-content").html(latestContent);
-
-            console.log('latest blog returned, got', data);
-        });
-
-        //get blogs from input box
-        $("#search-button").click(function (element) {
-            
-            var articleSearch = $("#blog-search-box").val().toLowerCase();
-            console.log('articleSearch:', articleSearch);
-
-            //query api and render the result
-            var apiSearch = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=search&metafield_value_has=" + articleSearch;
-            console.log('querying api...');
-            
-            $.get(apiSearch, function (data) {
-                if (!!data.objects) {
-                    var title = data.objects[0].title;
-                    var author = data.objects[0].metadata.author.title;
-                    var createdDate = data.objects[0].created_at;
-                    var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
-                    var image = new Image();
-                    image.setAttribute("src", data.objects[0].metadata.hero.url);
-                    var content = data.objects[0].content;
-                    currentBlogSlug = data.objects[0].slug;
-                    if (!!data.objects[0].metadata.comment) {
-                        var rawCommentDate = data.objects[0].metadata.comment.created_at;
-                        var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
-                        var comments = data.objects[0].metadata.comment.content;
-                        $("#comments").show();
-                        $("#comment-date").empty();
-                        $("#blog-comments").empty();
-                        $("#comment-date").append(commentDate);
-                        $("#blog-comments").append(comments);                        
-                    } else {
-                        $("#comment-date").empty();
-                        $("#blog-comments").empty();
-                    }
-
-                    $("#blog-title").html(title);
-                    $("#blog-author").html(author);
-                    $("#blog-createdDate").html(displayDate);
-                    $("#blog-image").html(image);
-                    $("#blog-content").html(content);
-                    console.log('query finished, got', data);                      
-                } else {
-                    $("#blog-title").empty();
-                    $("#blog-author").empty();
-                    $("#blog-createdDate").empty();
-                    $("#blog-image").empty();
-                    $("#blog-content").empty();
-                    $("#comments").hide();
-                    $("#comment-date").empty();
-                    $("#blog-comments").empty();
-
-                    $("#blog-content").append('Sorry, article not found. Please try again or click on a listed title.');
-                    console.log('query finished, no article found');
-                }
-            });
-        });
-
-        //POST /comments to Cosmic
-        $("#submit-button").click(function (element) {
-            
-            var newComment = $("#comments-box").val();
-            console.log('newComment:', newComment);   
-            
-            var commentParams = {
-                type_slug: 'comments',
-                title: 'comment-title', //try to increment a number on end of this to make unique comment titles
-                content: newComment
-            };            
-
-            var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
-            $.post(apiPost, commentParams);
-
-            var commentParamsJson = JSON.stringify(commentParams);
-            console.log('commentParamsJson: ' + commentParamsJson);
-            $("#comments-box").val('');
-            
-            //WORKING UP TO HERE!
-
-            // PUT request to amend the current blog object 'comment' metafield            
-            var currentComment = commentParams.title;
-            console.log(currentComment);
-            var apiCommentGet = "https://api.cosmicjs.com/v1/matttea-blog-app/object/" + currentComment;
-            $.get(apiCommentGet, function (data) {
-                if (!!data.object) {
-                    // var currentBlogSlug = //slug of the current blog (automatically global variable for this?)
-                    var commentValue = data.object.title;
-                    console.log('commentValue: ' + commentValue);
-                    var articleCommentParams =
-                        {
-                            slug: "part-2-the-beginnings-of-addiction", //currentBlogSlug (hard-coded slug for test)
-                            metafields: [
-                                {
-                                    title: "comment",
-                                    key: "comment",
-                                    value: commentValue,
-                                    type: "object"
-                                }
-                            ]
-                        }
-
-                    var articleCommentParamsJson = JSON.stringify(articleCommentParams);
-                    console.log('articleCommentParamsJson: ' + articleCommentParamsJson);
-
-                    var apiPut = "https://api.cosmicjs.com/v1/matttea-blog-app/edit-object";
-                    // $.put(apiPut, articleCommentParams); //$.put is not a jQuery function
-
-                    $.ajax({
-                        url: apiPut,                //Your api url
-                        type: 'PUT',                //type is any HTTP method
-                        data: articleCommentParams, //Data as js object
-                        success: function(){
-                            console.log('PUT action complete');
-                        }
-                    });
-
-                }
-            });
-        });  
-    });
-      
-
-    //TODO - Add elements to display author pic and details
-
-    </script>
 </html>

@@ -9,8 +9,42 @@
 
 <style>
 
+#headline {
+  padding: 20px 5%;
+  color: white;
+  font-family: Roboto, sans-serif;
+  background-image: url(t-shaped-blog.JPG);
+  background-size: cover;
+}
 
+#headline br {
+  clear: both;
+}
 
+@media (min-width: 600px) {
+
+}
+
+.container {
+  margin: auto;
+  max-width: 800px;
+}
+
+#author img {
+  width: 30%;
+  margin: 1%;
+  box-sizing: border-box;
+  border-radius: 50% 50%;
+  box-shadow: black 0px 0px 5px;
+}
+
+#footer {
+  padding: 0.8em;
+  color: white;
+  font-family: Roboto, sans-serif;
+  background-image: url(t-shaped-blog.JPG);
+  background-size: cover;
+}
 
 
 </style>
@@ -36,16 +70,10 @@
             <p>from Business Analyst to Business Engineer?</p>
         </header>
         <div id="blurb">
-            <p>chatting about my experiences whilst learning to code. and still trying to be a business analyst.</p>
+            <p>chatting about my experiences whilst learning to code. and still trying to be a business analyst</p>
         </div>
     </div>
 </div>
-
-
-<!-- Main image -->
-<section>
-    <img class="myImages" src="t-shaped-blog.JPG" alt="BA.Engineer" style="width:100%"> <!-- myImages class doesn't exist in stylesheet -->
-</section>
 
 
 <!-- Description -->
@@ -56,26 +84,73 @@
 </section>
 
 
+<!-- Latest Blog -->
+
+
+
 <!-- Author Details -->
-<section class="w3-row-padding w3-center w3-light-grey">
-    <article class="w3-third">
-        <p>mattTea</p>
-        <img src="mattTea.PNG" alt="matt Tea: Author" style="width:100%">
-        <p>Long time BA with a new found love of all things dev.<br>
-        I lead the business analysis for all ecommerce channels at an awesome UK retailer, whilst trying to disrupt our traditional tech role boundaries.<br>
-        And I race bicycles.
-        </p>
-    </article>
-</section>
+<div id="author">
+    <p>mattTea</p>
+    <img src="mattTea.PNG" alt="matt Tea: Author">
+    <p>Long time BA with a new found love of all things dev.<br>
+    I lead the business analysis for all ecommerce channels at an awesome UK retailer, whilst trying to disrupt our traditional tech role boundaries.<br>
+    And I race bicycles.
+    </p>
+</div>
 
 
 <!-- Footer -->
-<footer class="w3-container w3-padding-64 w3-center w3-black w3-xlarge">
-    <p>mattTea | B.A(ng) BRITISH informal 1. Exactly</p>
-</footer>
+<div id="footer">
+    <div class="container">
+        <p>mattTea | B.A(ng)</p>
+    </div>
+</div>
 
 
 
 </body>
+
+<script>
+//when page has fully rendered then execute this code
+$(document).ready(function () {
+    var currentBlogSlug;
+
+    //display latest blog on first page load
+    var latestBlog = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
+    $.get(latestBlog, function (data) {
+        var latestTitle = data.objects[0].title;
+        var latestAuthor = data.objects[0].metadata.author.title;
+        var latestCreatedDate = data.objects[0].created_at;
+        var latestDisplayDate = latestCreatedDate.charAt(8) + latestCreatedDate.charAt(9) + '/' + latestCreatedDate.charAt(5) + latestCreatedDate.charAt(6) + '/' + latestCreatedDate.charAt(0) + latestCreatedDate.charAt(1) + latestCreatedDate.charAt(2) + latestCreatedDate.charAt(3);
+        var latestImage = new Image();
+        latestImage.setAttribute("src", data.objects[0].metadata.hero.url);
+        var latestContent = data.objects[0].content;
+        currentBlogSlug = data.objects[0].slug;
+        if (!!data.objects[0].metadata.comment) {
+            var rawCommentDate = data.objects[0].metadata.comment.created_at;
+            var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
+            var comments = data.objects[0].metadata.comment.content;
+            $("#comment-date").empty();
+            $("#blog-comments").empty();
+            $("#comment-date").append(commentDate);
+            $("#blog-comments").append(comments);                        
+        } else {
+            $("#comment-date").empty();
+            $("#blog-comments").empty();
+        }
+
+        $("#blog-title").html(latestTitle);
+        $("#blog-author").html(latestAuthor);
+        $("#blog-createdDate").html(latestDisplayDate);
+        $("#blog-image").html(latestImage);
+        $("#blog-content").html(latestContent);
+
+        console.log('latest blog returned, got', data);
+    });
+});
+
+</script>
+
+
 
 </html>

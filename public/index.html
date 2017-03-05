@@ -10,15 +10,15 @@
 <style>
 
 #headline {
-  padding: 20px 5%;
-  color: white;
-  font-family: Roboto, sans-serif;
-  background-image: url(t-shaped-blog.JPG);
-  background-size: cover;
+    padding: 20px 5%;
+    color: white;
+    font-family: Roboto, sans-serif;
+    background-image: url(t-shaped-blog.JPG);
+    background-size: cover;
 }
 
 #headline br {
-  clear: both;
+    clear: both;
 }
 
 @media (min-width: 600px) {
@@ -26,24 +26,25 @@
 }
 
 .container {
-  margin: auto;
-  max-width: 800px;
+    margin: auto;
+    max-width: 800px;
+    padding: 20px 5%;
 }
 
 #author img {
-  width: 30%;
-  margin: 1%;
-  box-sizing: border-box;
-  border-radius: 50% 50%;
-  box-shadow: black 0px 0px 5px;
+    width: 30%;
+    margin: 1%;
+    box-sizing: border-box;
+    border-radius: 50% 50%;
+    box-shadow: black 0px 0px 5px;
 }
 
 #footer {
-  padding: 0.8em;
-  color: white;
-  font-family: Roboto, sans-serif;
-  background-image: url(t-shaped-blog.JPG);
-  background-size: cover;
+    padding: 0.8em;
+    color: white;
+    font-family: Roboto, sans-serif;
+    background-image: url(t-shaped-blog.JPG);
+    background-size: cover;
 }
 
 
@@ -51,6 +52,7 @@
 </head>
 
 <body>
+
 <!-- Navigation -->
 <nav>
     <ul class="w3-navbar w3-black"><!-- get own class identifiers from style.css -->
@@ -76,16 +78,30 @@
 </div>
 
 
-<!-- Description -->
-<section class="w3-container w3-center w3-content" style="max-width:600px">
-    <h2 class="w3-wide">B.A(ng)</h2>
-    <p class="w3-opacity"><i>from Business Analyst to Business Engineer?</i></p>
-    <p class="w3-center">chatting about my experiences whilst learning to code.<br>and still trying to be a business analyst.</p>
-</section>
-
-
 <!-- Latest Blog -->
+<div class="container" id="blogs">
+    <div id="blog-title" style="color:saddlebrown;font-size:150%;font-weight:bold;margin:25px;text-align:center"></div>
+    <div id="blog-author" style="font-weight:bold;text-align:center"></div>
+    <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
+    <div id="blog-image" style="display:block;text-align:center;padding-top:10px;padding-bottom:10px"></div>
+    <div id="blog-content" style="padding-top:10px;padding-bottom:10px"></div>
+    
+    <!-- <form id="newComment" method="post">
+        <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="Add comment..."></textarea>                
+        <input type="submit" value="Submit">
+    </form> -->
 
+    <div id="comments">
+        <div id="comment-header">
+            <h4>comments...</h4>
+        </div>
+        <div id="comment-date"></div>
+        <div id="blog-comments"></div>
+<!--         <textarea id="comments-box" rows="4" cols="50" placeholder="Add comment..."></textarea>
+        <button id="submit-button">Submit</button>  -->
+    </div>
+
+</div>
 
 
 <!-- Author Details -->
@@ -99,9 +115,9 @@
 </div>
 
 
-<!-- Footer -->
+<!-- Footer  MAKE <section> TO FIX TO BOTTOM WHEN MAKING AUTHOR DETAILS FLOAT? -->
 <div id="footer">
-    <div class="container">
+    <div class="container" style="text-align:center">
         <p>mattTea | B.A(ng)</p>
     </div>
 </div>

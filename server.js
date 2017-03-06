@@ -8,6 +8,7 @@ var PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
+
 // Cosmic config
 var config = {};
 config.bucket = {
@@ -17,10 +18,7 @@ config.bucket = {
 };
 
 
-//TODO layout to be responsive
-//TODO index.html to show latest article
-//TODO header links on index.html for Home | Blogs | Author Bio | Search | Contact
-//TODO images to be full bleed and responsive (new header image + hand drawn blog images)
+//TODO hand drawn blog images
 //TODO comments to be added as a metafield to article objects (ability to add multiple)
 //TODO search (to search titles and content) to create dynamic list view of titles, each of which are hyperlinked like current blog list
 	//Search.click() with blank entry takes to search page with full list of blogs
@@ -31,22 +29,7 @@ config.bucket = {
 //TODO contact form required
 
 
-// GET /articles
-// app.get('/articles', function(req, res) {
-//     // show dynamic index listed blogs on this page url
-// });
-
-
-// GET /articles/article-title
-// show specific blog on each page url
-// possibly use existing search or link function
-
-
 // Static author page /mattTea
-
-
-// GET /articles?q= (search)
-
 
 
 app.listen(PORT, function() {

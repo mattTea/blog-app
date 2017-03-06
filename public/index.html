@@ -21,6 +21,18 @@
     clear: both;
 }
 
+#blog-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 90%;
+  margin: 20px auto;
+  text-align:center;
+  padding-top:10px;
+  padding-bottom:10px
+}
+
 @media (min-width: 600px) {
 
 }
@@ -56,8 +68,8 @@
 <!-- Navigation -->
 <nav>
     <ul class="w3-navbar w3-black"><!-- get own class identifiers from style.css -->
-        <li><a href="javascript:void(0)">Home</a></li>
-        <li><a href="javascript:void(0)">Blogs</a></li>
+        <li style="font-weight:bold">Home</li>
+        <li><a href="articles.html">Blogs</a></li>
         <li><a href="javascript:void(0)">Author Bio</a></li>
         <li><a href="javascript:void(0)">Search</a></li>
         <li><a href="javascript:void(0)">Contact</a></li>
@@ -83,7 +95,7 @@
     <div id="blog-title" style="color:saddlebrown;font-size:150%;font-weight:bold;margin:25px;text-align:center"></div>
     <div id="blog-author" style="font-weight:bold;text-align:center"></div>
     <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
-    <div id="blog-image" style="display:block;text-align:center;padding-top:10px;padding-bottom:10px"></div>
+    <img id="blog-image" src="" alt="blog image"></img>
     <div id="blog-content" style="padding-top:10px;padding-bottom:10px"></div>
     
     <!-- <form id="newComment" method="post">
@@ -129,7 +141,6 @@
 <script>
 //when page has fully rendered then execute this code
 $(document).ready(function () {
-    var currentBlogSlug;
 
     //display latest blog on first page load
     var latestBlog = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
@@ -138,10 +149,8 @@ $(document).ready(function () {
         var latestAuthor = data.objects[0].metadata.author.title;
         var latestCreatedDate = data.objects[0].created_at;
         var latestDisplayDate = latestCreatedDate.charAt(8) + latestCreatedDate.charAt(9) + '/' + latestCreatedDate.charAt(5) + latestCreatedDate.charAt(6) + '/' + latestCreatedDate.charAt(0) + latestCreatedDate.charAt(1) + latestCreatedDate.charAt(2) + latestCreatedDate.charAt(3);
-        var latestImage = new Image();
-        latestImage.setAttribute("src", data.objects[0].metadata.hero.url);
+        var latestImage = data.objects[0].metadata.hero.url;
         var latestContent = data.objects[0].content;
-        currentBlogSlug = data.objects[0].slug;
         if (!!data.objects[0].metadata.comment) {
             var rawCommentDate = data.objects[0].metadata.comment.created_at;
             var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
@@ -158,11 +167,12 @@ $(document).ready(function () {
         $("#blog-title").html(latestTitle);
         $("#blog-author").html(latestAuthor);
         $("#blog-createdDate").html(latestDisplayDate);
-        $("#blog-image").html(latestImage);
+        $("#blog-image").attr("src", latestImage);
         $("#blog-content").html(latestContent);
 
         console.log('latest blog returned, got', data);
     });
+
 });
 
 </script>

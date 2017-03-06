@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<title>B.A(ng)</title>
+
+<style>
+
+#headline {
+    padding: 20px 5%;
+    color: white;
+    font-family: Roboto, sans-serif;
+    background-image: url(t-shaped-blog.JPG);
+    background-size: cover;
+}
+
+#headline br {
+    clear: both;
+}
+
+#blog-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 90%;
+  margin: 20px auto;
+  text-align:center;
+  padding-top:10px;
+  padding-bottom:10px
+}
+
+@media (min-width: 600px) {
+
+}
+
+.container {
+    margin: auto;
+    max-width: 800px;
+    padding: 20px 5%;
+}
+
+#author img {
+    width: 30%;
+    margin: 1%;
+    box-sizing: border-box;
+    border-radius: 50% 50%;
+    box-shadow: black 0px 0px 5px;
+}
+
+#footer {
+    padding: 0.8em;
+    color: white;
+    font-family: Roboto, sans-serif;
+    background-image: url(t-shaped-blog.JPG);
+    background-size: cover;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav>
+    <ul class="w3-navbar w3-black"><!-- get own class identifiers from style.css -->
+        <li><a href="index.html">Home</a></li>
+        <li style="font-weight:bold">Blogs</li>
+        <li><a href="javascript:void(0)">Author Bio</a></li>
+        <li><a href="javascript:void(0)">Search</a></li>
+        <li><a href="javascript:void(0)">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Headline -->
+<div id="headline">
+    <div class="container">
+        <header>
+            <h1>B.A(ng)</h1>
+            <p>from Business Analyst to Business Engineer?</p>
+        </header>
+        <div id="blurb">
+            <p>chatting about my experiences whilst learning to code. and still trying to be a business analyst</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Clicked Blog -->
+<div class="container" id="blogs">
+    <div id="blog-title" style="color:saddlebrown;font-size:150%;font-weight:bold;margin:25px;text-align:center"></div>
+    <div id="blog-author" style="font-weight:bold;text-align:center"></div>
+    <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
+    <img id="blog-image" src="" alt="blog image"></img>
+    <div id="blog-content" style="padding-top:10px;padding-bottom:10px"></div>
+    
+    <!-- <form id="newComment" method="post">
+        <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="Add comment..."></textarea>                
+        <input type="submit" value="Submit">
+    </form> -->
+
+    <div id="comments">
+        <div id="comment-header">
+            <h4>comments...</h4>
+        </div>
+        <div id="comment-date"></div>
+        <div id="blog-comments"></div>
+<!--         <textarea id="comments-box" rows="4" cols="50" placeholder="Add comment..."></textarea>
+        <button id="submit-button">Submit</button>  -->
+    </div>
+
+</div>
+
+
+<!-- Blog Index -->
+<div class="container" id="blog-index">
+    <h2>the blogs...</h2>
+    <input id="blog-search-box" type="text" placeholder="Search titles"/>
+    <button id="search-button">Search</button>       
+    <a href="#blog-title"><table id="index" style="cursor:pointer;padding-top:1em;padding-bottom:1em">
+        <tr></tr>
+    </table></a>
+</div>
+
+
+
+<!-- Footer  MAKE <section> TO FIX TO BOTTOM WHEN MAKING AUTHOR DETAILS FLOAT? -->
+<div id="footer">
+    <div class="container" style="text-align:center">
+        <p>mattTea | B.A(ng)</p>
+    </div>
+</div>
+
+
+
+</body>
+
+<script>
+//when page has fully rendered then execute this code
+$(document).ready(function () {
+
+    //display index of blog titles
+    var blogIndex = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
+    $.get(blogIndex, function (data) {
+        var tr;
+        if (data.objects.length > 0) {
+            for (var i = 0; i < data.objects.length; i++) {                         
+                tr = $('<tr/>');
+                tr.append("<td>" + data.objects[i].title + "</td>");
+                $("#index").append(tr);
+            }
+            console.log('index query finished, got', data);
+        } else {
+            $("#index").empty();
+            $("#index").append('Oops! Something went wrong, no blogs found.');
+            console.log('query finished, no blogs found');                
+        }
+    });
+
+    //blog display on index row click
+    $('#index').on('click', 'tr', function() {
+        console.log('You clicked row ' + ($(this).index()));
+        
+        var currentRow = $(this).closest("tr");
+        var cellText = currentRow.find("td:eq(0)").text();
+        console.log('The content of this table row is ' + cellText);
+        
+        var blogIndexClick = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + cellText;
+
+        $.get(blogIndexClick, function (data) {
+            if (!!data.objects) {
+                var title = data.objects[0].title;
+                var author = data.objects[0].metadata.author.title;
+                var createdDate = data.objects[0].created_at;
+                var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+                var blogImage = data.objects[0].metadata.hero.url;
+                var content = data.objects[0].content;
+                if (!!data.objects[0].metadata.comment) {
+                    var rawCommentDate = data.objects[0].metadata.comment.created_at;
+                    var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
+                    var comments = data.objects[0].metadata.comment.content;
+                    $("#comments").show();
+                    $("#comment-date").empty();
+                    $("#blog-comments").empty();
+                    $("#comment-date").append(commentDate);
+                    $("#blog-comments").append(comments);                        
+                } else {
+                    $("#comment-date").empty();
+                    $("#blog-comments").empty();
+                }
+
+                $("#blog-title").html(title);
+                $("#blog-author").html(author);
+                $("#blog-createdDate").html(displayDate);
+                $("#blog-image").attr("src", blogImage);
+                $("#blog-content").html(content);
+                console.log('query finished, got', data);                      
+            } else {
+                $("#blog-title").empty();
+                $("#blog-author").empty();
+                $("#blog-createdDate").empty();
+                $("#blog-image").empty();
+                $("#blog-content").empty();
+                $("#comments").hide();
+                $("#comment-date").empty();
+                $("#blog-comments").empty();
+
+                $("#blog-content").append('Sorry, that link didn\'t work. Please try searching by title.');
+                console.log('query finished, no article found');
+            }
+        });
+    });
+
+});
+
+</script>
+
+
+
+</html>

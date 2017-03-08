@@ -17,7 +17,7 @@
     <ul class="w3-navbar w3-black">
         <li style="font-weight:bold">Home</li>
         <li><a href="articles.html">Blogs</a></li>
-        <li><a href="javascript:void(0)">Author Bio</a></li>
+        <li><a href="about.html">About</a></li>
         <li><a href="javascript:void(0)">Search</a></li>
         <li><a href="javascript:void(0)">Contact</a></li>
     </ul>
@@ -63,23 +63,12 @@
 </div>
 
 
-<!-- Author Details -->
-<div id="author">
-    <p>mattTea</p>
-    <img src="mattTea.PNG" alt="matt Tea: Author">
-    <p>Long time BA with a new found love of all things dev.<br>
-    I lead the business analysis for all ecommerce channels at an awesome UK retailer, whilst trying to disrupt our traditional tech role boundaries.<br>
-    And I race bicycles.
-    </p>
-</div>
-
-
 <!-- Footer  MAKE <section> TO FIX TO BOTTOM WHEN MAKING AUTHOR DETAILS FLOAT? -->
-<div id="footer">
+<footer id="footer">
     <div class="container" style="text-align:center">
         <p>mattTea | B.A(ng)</p>
     </div>
-</div>
+</footer>
 
 
 
@@ -102,11 +91,13 @@ $(document).ready(function () {
             var rawCommentDate = data.objects[0].metadata.comment.created_at;
             var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
             var comments = data.objects[0].metadata.comment.content;
+            $("#comments").show();
             $("#comment-date").empty();
             $("#blog-comments").empty();
             $("#comment-date").append(commentDate);
             $("#blog-comments").append(comments);                        
         } else {
+            $("#comments").hide();
             $("#comment-date").empty();
             $("#blog-comments").empty();
         }

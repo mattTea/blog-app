@@ -17,7 +17,7 @@
     <ul class="w3-navbar w3-black">
         <li><a href="index.html">Home</a></li>
         <li style="font-weight:bold">Blogs</li>
-        <li><a href="javascript:void(0)">Author Bio</a></li>
+        <li><a href="about.html">About</a></li>
         <li><a href="javascript:void(0)">Search</a></li>
         <li><a href="javascript:void(0)">Contact</a></li>
     </ul>
@@ -37,50 +37,48 @@
 </div>
 
 
-<!-- Clicked Blog -->
-<div class="container" id="blogs">
-    <div id="blog-title" style="color:saddlebrown;font-size:150%;font-weight:bold;margin:25px;text-align:center"></div>
-    <div id="blog-author" style="font-weight:bold;text-align:center"></div>
-    <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
-    <img id="blog-image" src="" alt="blog image"></img>
-    <div id="blog-content" style="padding-top:10px;padding-bottom:10px"></div>
-    
-    <!-- <form id="newComment" method="post">
-        <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="Add comment..."></textarea>                
-        <input type="submit" value="Submit">
-    </form> -->
-
-    <div id="comments">
-        <div id="comment-header">
-            <h4>comments...</h4>
+<!-- Blog Index & Details -->
+<div id="blogs">
+    <div class="container">
+        <div id="blog-index">
+            <h2>the blogs...</h2>
+            <a href="#blog-title"><table id="index" style="cursor:pointer;padding-top:1em;padding-bottom:1em">
+                <tr></tr>
+            </table></a>
         </div>
-        <div id="comment-date"></div>
-        <div id="blog-comments"></div>
-<!--         <textarea id="comments-box" rows="4" cols="50" placeholder="Add comment..."></textarea>
-        <button id="submit-button">Submit</button>  -->
+
+        <div id="blog-details">
+            <div id="blog-title" style="color:saddlebrown;font-size:150%;font-weight:bold;margin:25px;text-align:center"></div>
+            <div id="blog-author" style="font-weight:bold;text-align:center"></div>
+            <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
+            <img id="blog-image" src="" alt="blog image"></img>
+            <div id="blog-content" style="padding-top:10px;padding-bottom:10px"></div>
+            
+            <!-- <form id="newComment" method="post">
+                <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="Add comment..."></textarea>                
+                <input type="submit" value="Submit">
+            </form> -->
+
+            <div id="comments">
+                <div id="comment-header">
+                    <h4>comments...</h4>
+                </div>
+                <div id="comment-date"></div>
+                <div id="blog-comments"></div>
+        <!--         <textarea id="comments-box" rows="4" cols="50" placeholder="Add comment..."></textarea>
+                <button id="submit-button">Submit</button>  -->
+            </div>
+        </div>
     </div>
-
 </div>
 
 
-<!-- Blog Index -->
-<div class="container" id="blog-index">
-    <h2>the blogs...</h2>
-    <input id="blog-search-box" type="text" placeholder="Search titles"/>
-    <button id="search-button">Search</button>       
-    <a href="#blog-title"><table id="index" style="cursor:pointer;padding-top:1em;padding-bottom:1em">
-        <tr></tr>
-    </table></a>
-</div>
-
-
-
-<!-- Footer  MAKE <section> TO FIX TO BOTTOM WHEN MAKING AUTHOR DETAILS FLOAT? -->
-<div id="footer">
+<!-- Footer  MAKE <section> TO FIX TO BOTTOM WHEN MAKING INDEX FLOAT? -->
+<footer id="footer">
     <div class="container" style="text-align:center">
         <p>mattTea | B.A(ng)</p>
     </div>
-</div>
+</footer>
 
 
 
@@ -89,6 +87,8 @@
 <script>
 //when page has fully rendered then execute this code
 $(document).ready(function () {
+
+    $("#blog-details").hide();
 
     //display index of blog titles
     var blogIndex = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
@@ -136,10 +136,12 @@ $(document).ready(function () {
                     $("#comment-date").append(commentDate);
                     $("#blog-comments").append(comments);                        
                 } else {
+                    $("#comments").hide();
                     $("#comment-date").empty();
                     $("#blog-comments").empty();
                 }
 
+                $("#blog-details").show();                
                 $("#blog-title").html(title);
                 $("#blog-author").html(author);
                 $("#blog-createdDate").html(displayDate);

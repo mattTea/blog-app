@@ -2,12 +2,14 @@
     padding: 20px 5%;
     color: white;
     font-family: Questrial;
-    background-image: url(t-shaped-blog.JPG);
+    background-image: url(blog-banner.jpg);
     background-size: cover;
+    text-align:center;
 }
 
 #blurb {
     font-size: 15px;
+    font-weight: bold;
 }
 
 #blog-image {
@@ -29,13 +31,13 @@
     font-size: 18px;
 }
 
+a {text-decoration: none; }
+
 #index {
     cursor: pointer;
     padding-top: 1em;
     padding-bottom: 1em;
     color: DarkSlateGrey;
-    font-style: normal;
-    font-variant: normal;
     font-size: 15px;
 }
 
@@ -47,6 +49,9 @@
     #index {
         font-size: 13px;
     }
+    h2 {
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 344px) {
@@ -55,6 +60,9 @@
         font-size: 12px;
     }
     #index {
+        font-size: 12px;
+    }
+    #author-blurb {
         font-size: 12px;
     }
 }
@@ -81,7 +89,8 @@
     padding: 0.8em;
     color: white;
     font-family: Questrial;
-    background-image: url(t-shaped-blog.JPG);
+    font-weight: bold;
+    background-image: url(blog-footer.jpg);
     background-size: cover;
 }
 

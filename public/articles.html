@@ -27,10 +27,10 @@
     <div class="container">
         <header>
             <h1>B.A(ng)</h1>
-            <p>from business analyst to engineer</p>
+            <h2>from business analyst to engineer</h2>
         </header>
         <div id="blurb">
-            <p>chatting about my experiences learning to code. and still trying to be a business analyst</p>
+            <p>chatting about my experiences learning to code<br>and still trying to be a business analyst</p>
         </div>
     </div>
 </div>
@@ -52,11 +52,6 @@
             <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
             <img id="blog-image" src="" alt="blog image"></img>
             <div id="blog-content"></div>
-            
-            <!-- <form id="newComment" method="post">
-                <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="Add comment..."></textarea>                
-                <input type="submit" value="Submit">
-            </form> -->
 
             <div id="comments">
                 <div id="comment-header">
@@ -64,15 +59,24 @@
                 </div>
                 <div id="comment-date"></div>
                 <div id="blog-comments"></div>
-        <!--         <textarea id="comments-box" rows="4" cols="50" placeholder="Add comment..."></textarea>
-                <button id="submit-button">Submit</button>  -->
+            </div>
+            
+            <div id="newComment">
+                <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="share you thoughts..."></textarea>                
+                <button id="submit-button" value="Submit">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- TODO comments field
+1. Show blog comments metafield (if none, show message "no comments")
+2. DONE Add newComments textarea and submit button to page
+3. See if poss to POST/APPEND date<br>text<br><br> to the blog comments metafield
+-->
 
-<!-- Footer  MAKE <section> TO FIX TO BOTTOM WHEN MAKING INDEX FLOAT? -->
+
+<!-- Footer -->
 <footer id="footer">
     <div class="container" style="text-align:center">
         <p>mattTea | B.A(ng)</p>
@@ -163,6 +167,49 @@ $(document).ready(function () {
         });
     });
 
+    //POST /comments to Cosmic
+    $("#submit-button").click(function (element) {
+        
+        var newComment = $("#comments-box").val();
+        console.log('newComment:', newComment);   
+        var d = new Date();
+        var date = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
+        var commentValue = date + "<br>" + newComment + "<br><br>";
+
+        console.log(commentValue);
+
+        //PUT https://api.cosmicjs.com/v1/matttea-blog-app/edit-object
+        var commentPut = "https://api.cosmicjs.com/v1/matttea-blog-app/edit-object";
+        
+        var blogComment =
+            {
+                slug: 'test-the-beginnings-of-addiction', //currentBlogSlug (hard-coded slug for test)
+                //think i might need to put all metafields in? but would rather not
+                metafields: [
+                    {
+                        title: 'Comments',
+                        key: 'comments',
+                        value: commentValue,
+                        type: 'text'
+                    }
+                ]
+            }
+
+        var blogCommentJson = JSON.stringify(blogComment);
+        console.log('blogCommentJson: ' + blogCommentJson);
+
+        // BELOW commented out as PUT call was clearing all other metafields apart from Comments!
+        // $.ajax({
+        //     url: commentPut,
+        //     method: 'PUT',
+        //     contentType: 'application/json',
+        //     data: blogCommentJson,
+        //     success: function(){
+        //         console.log('PUT action complete');
+        //     }
+        // });
+        $("#comments-box").val('');
+    });
 });
 
 </script>

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" type="text/css" href="style.css"/>
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Questrial"/>
+<link rel="icon" type="image/png" href="favicon.png"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <title>B.A(ng)</title>
 
@@ -26,7 +27,7 @@
 <div id="headline">
     <div class="container">
         <header>
-            <h1>B.A(ng)</h1>
+            <h1><span>B.A(ng)</span></h1>
             <h2>from business analyst to engineer</h2>
         </header>
         <div id="blurb">
@@ -71,8 +72,6 @@
 
 <!-- TODO comments field
 1. Show blog comments metafield (if none, show message "no comments")
-2. DONE Add newComments textarea and submit button to page
-3. See if poss to POST/APPEND date<br>text<br><br> to the blog comments metafield
 -->
 
 
@@ -183,7 +182,7 @@ $(document).ready(function () {
         
         var blogComment =
             {
-                slug: 'test-the-beginnings-of-addiction', //currentBlogSlug (hard-coded slug for test)
+                slug: 'test-the-beginnings-of-addiction', //hard-coded slug for test
                 //think i might need to put all metafields in? but would rather not
                 metafields: [
                     {

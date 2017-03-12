@@ -58,12 +58,11 @@
                 <div id="comment-header">
                     <h4>comments...</h4>
                 </div>
-                <div id="comment-date"></div>
                 <div id="blog-comments"></div>
             </div>
             
-            <div id="newComment">
-                <textarea id="comments-box" name="newComment" rows="4" cols="50" placeholder="share you thoughts..."></textarea>                
+            <div id="new-comment">
+                <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="share you thoughts..."></textarea>                
                 <button id="submit-button" value="Submit">Submit</button>
             </div>
         </div>
@@ -128,18 +127,13 @@ $(document).ready(function () {
                 var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
                 var blogImage = data.objects[0].metadata.hero.url;
                 var content = data.objects[0].content;
-                if (!!data.objects[0].metadata.comment) {
-                    var rawCommentDate = data.objects[0].metadata.comment.created_at;
-                    var commentDate = rawCommentDate.charAt(8) + rawCommentDate.charAt(9) + '/' + rawCommentDate.charAt(5) + rawCommentDate.charAt(6) + '/' + rawCommentDate.charAt(0) + rawCommentDate.charAt(1) + rawCommentDate.charAt(2) + rawCommentDate.charAt(3);
-                    var comments = data.objects[0].metadata.comment.content;
+                if (!!data.objects[0].metadata.comments) {
+                    var comments = data.objects[0].metadata.comments;
                     $("#comments").show();
-                    $("#comment-date").empty();
                     $("#blog-comments").empty();
-                    $("#comment-date").append(commentDate);
                     $("#blog-comments").append(comments);                        
                 } else {
                     $("#comments").hide();
-                    $("#comment-date").empty();
                     $("#blog-comments").empty();
                 }
 
@@ -157,7 +151,6 @@ $(document).ready(function () {
                 $("#blog-image").empty();
                 $("#blog-content").empty();
                 $("#comments").hide();
-                $("#comment-date").empty();
                 $("#blog-comments").empty();
 
                 $("#blog-content").append('Sorry, that link didn\'t work. Please try searching by title.');
@@ -166,7 +159,7 @@ $(document).ready(function () {
         });
     });
 
-    //POST /comments to Cosmic
+    //PUT /comments to Cosmic
     $("#submit-button").click(function (element) {
         
         var newComment = $("#comments-box").val();
@@ -177,13 +170,11 @@ $(document).ready(function () {
 
         console.log(commentValue);
 
-        //PUT https://api.cosmicjs.com/v1/matttea-blog-app/edit-object
         var commentPut = "https://api.cosmicjs.com/v1/matttea-blog-app/edit-object";
         
         var blogComment =
             {
                 slug: 'test-the-beginnings-of-addiction', //hard-coded slug for test
-                //think i might need to put all metafields in? but would rather not
                 metafields: [
                     {
                         title: 'Comments',

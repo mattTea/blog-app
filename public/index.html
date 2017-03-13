@@ -86,7 +86,7 @@ $(document).ready(function () {
         var latestImage = data.objects[0].metadata.hero.url;
         var latestContent = data.objects[0].content;
         if (!!data.objects[0].metadata.comments) {
-            var comments = data.objects[0].metadata.comment.content;
+            var comments = data.objects[0].metadata.comments;
             $("#comments").show();
             $("#blog-comments").empty();
             $("#blog-comments").append(comments);                        

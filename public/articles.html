@@ -188,6 +188,22 @@ $(document).ready(function () {
         var blogCommentJson = JSON.stringify(blogComment);
         console.log('blogCommentJson: ' + blogCommentJson);
 
+/*here's what i think i need to do...
+set up comments as an object again
+GET existing (how determine) comment detail
+concatanate existing and new comment detail
+POST concatanated comment
+somehow associate comment with current blog
+
+MVP here...
+let user submit a comment and i manually associate
+ - straightforward POST request to new comment object
+ - next slice - see if can scrape the current blog viewed when user is submitting
+
+    - needs metafield on Article object
+
+*/
+
         // BELOW commented out as PUT call was clearing all other metafields apart from Comments!
         // $.ajax({
         //     url: commentPut,
@@ -198,7 +214,7 @@ $(document).ready(function () {
         //         console.log('PUT action complete');
         //     }
         // });
-        $("#comments-box").val('');
+        // $("#comments-box").val('');
     });
 });
 

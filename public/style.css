@@ -31,7 +31,22 @@
     font-size: 18px;
 }
 
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+button {
+    font-family: Questrial;
+}
+
 a {text-decoration: none; }
+
+#comments {
+    font-size: 15px;
+}
 
 #index {
     cursor: pointer;
@@ -52,6 +67,9 @@ a {text-decoration: none; }
     h2 {
         font-size: 18px;
     }
+    #comments {
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 344px) {
@@ -63,6 +81,9 @@ a {text-decoration: none; }
         font-size: 12px;
     }
     #author-blurb {
+        font-size: 12px;
+    }
+    #comments {
         font-size: 12px;
     }
 }

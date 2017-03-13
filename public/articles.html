@@ -62,7 +62,7 @@
             </div>
             
             <div id="new-comment">
-                <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="share you thoughts..."></textarea>                
+                <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="please do share your thoughts..."></textarea>                
                 <button id="submit-button" value="Submit">Submit</button>
             </div>
         </div>
@@ -127,8 +127,8 @@ $(document).ready(function () {
                 var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
                 var blogImage = data.objects[0].metadata.hero.url;
                 var content = data.objects[0].content;
-                if (!!data.objects[0].metadata.comments) {
-                    var comments = data.objects[0].metadata.comments;
+                if (!!data.objects[0].metadata.comment) {
+                    var comments = data.objects[0].metadata.comment.content;
                     $("#comments").show();
                     $("#blog-comments").empty();
                     $("#blog-comments").append(comments);                        
@@ -159,67 +159,34 @@ $(document).ready(function () {
         });
     });
 
-    //PUT /comments to Cosmic
+    //POST /comments to Cosmic
     $("#submit-button").click(function (element) {
         
         var newComment = $("#comments-box").val();
-        console.log('newComment:', newComment);   
+        console.log('newComment: ', newComment);
+
         var d = new Date();
         var date = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
         var commentValue = date + "<br>" + newComment + "<br><br>";
 
         console.log(commentValue);
 
-        var commentPut = "https://api.cosmicjs.com/v1/matttea-blog-app/edit-object";
-        
-        var blogComment =
-            {
-                slug: 'test-the-beginnings-of-addiction', //hard-coded slug for test
-                metafields: [
-                    {
-                        title: 'Comments',
-                        key: 'comments',
-                        value: commentValue,
-                        type: 'text'
-                    }
-                ]
-            }
+        var commentParams = {
+            type_slug: 'comments',
+            title: date + ' ' + d.getHours() + ':' + d.getMinutes() + ' comment',
+            content: commentValue
+        };            
+        var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
+        $.post(apiPost, commentParams);
+        var commentParamsJson = JSON.stringify(commentParams);
+        console.log('commentParamsJson: ' + commentParamsJson);
 
-        var blogCommentJson = JSON.stringify(blogComment);
-        console.log('blogCommentJson: ' + blogCommentJson);
+        $("#comments-box").val('');
 
-/*here's what i think i need to do...
-set up comments as an object again
-GET existing (how determine) comment detail
-concatanate existing and new comment detail
-POST concatanated comment
-somehow associate comment with current blog
-
-MVP here...
-let user submit a comment and i manually associate
- - straightforward POST request to new comment object
- - next slice - see if can scrape the current blog viewed when user is submitting
-
-    - needs metafield on Article object
-
-*/
-
-        // BELOW commented out as PUT call was clearing all other metafields apart from Comments!
-        // $.ajax({
-        //     url: commentPut,
-        //     method: 'PUT',
-        //     contentType: 'application/json',
-        //     data: blogCommentJson,
-        //     success: function(){
-        //         console.log('PUT action complete');
-        //     }
-        // });
-        // $("#comments-box").val('');
     });
 });
 
 </script>
-
 
 
 </html>

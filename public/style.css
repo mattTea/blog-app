@@ -147,4 +147,7 @@ img{margin-bottom:-5px}a{color:inherit}
 .w3-dropdown-hover.w3-mobile,.w3-dropdown-hover.w3-mobile .w3-btn,.w3-dropdown-hover.w3-mobile .w3-button,.w3-dropdown-click.w3-mobile,.w3-dropdown-click.w3-mobile .w3-btn,.w3-dropdown-click.w3-mobile .w3-button{width:100%}}
 
 /* makes background black all the time */
-.w3-black,.w3-hover-black:hover{color:#fff!important;background-color:#000!important}
+/*.w3-black,.w3-hover-black:hover{color:#fff!important;background-color:#000!important}*/
+
+/* changed above commented out line to the below so menu is white background and brown text */
+.w3-black,.w3-hover-black:hover{color:#784300!important;background-color:#fff!important}

@@ -36,7 +36,6 @@
     </div>
 </div>
 
-
 <!-- Blog Index & Details -->
 <div id="blogs">
     <div class="container">
@@ -62,17 +61,12 @@
             </div>
             
             <div id="new-comment">
-                <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="please do share your thoughts..."></textarea>                
+                <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="your thoughts..."></textarea>                
                 <button id="submit-button" value="Submit">Submit</button>
             </div>
         </div>
     </div>
 </div>
-
-<!-- TODO comments field
-1. Show blog comments metafield (if none, show message "no comments")
--->
-
 
 <!-- Footer -->
 <footer id="footer">
@@ -80,8 +74,6 @@
         <p>mattTea | B.A(ng)</p>
     </div>
 </footer>
-
-
 
 </body>
 
@@ -167,7 +159,7 @@ $(document).ready(function () {
 
         var d = new Date();
         var date = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
-        var commentValue = date + "<br>" + newComment + "<br><br>";
+        var commentValue = date + ' ' + d.getHours() + ':' + d.getMinutes() + "<br>" + newComment + "<br><br>";
 
         console.log(commentValue);
 

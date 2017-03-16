@@ -40,6 +40,15 @@ textarea {
 
 button {
     font-family: Questrial;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: #4CAF50;
+    color: white;
 }
 
 a {text-decoration: none; }

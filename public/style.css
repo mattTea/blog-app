@@ -79,6 +79,11 @@ a {text-decoration: none; }
     #menu { /* menu is the burger image */
         display: none;
     }
+    #navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -116,7 +121,21 @@ a {text-decoration: none; }
     }
     #navbar {
         font-size: 15px;
+        position: fixed;
+        margin-top: -7px;
+        width: 100%;
+        background-color: white;
     }
+    #menu {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: white;
+    }
+}
+
+.main {
+    margin-top: 30px;
 }
 
 .container {

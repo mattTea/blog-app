@@ -65,6 +65,22 @@ a {text-decoration: none; }
     font-size: 15px;
 }
 
+#index tr:hover {
+    color: #784300;
+    font-weight: bold;
+}
+
+#menu span:hover {
+    font-weight: bold;
+}
+
+@media (min-width: 344px) {
+    /* add style required over 344px width */
+    #menu { /* menu is the burger image */
+        display: none;
+    }
+}
+
 @media (max-width: 600px) {
     /* add style required under 600px width */
     #blog-content {
@@ -81,8 +97,8 @@ a {text-decoration: none; }
     }
 }
 
-@media (max-width: 344px) {
-    /* add style required under 344px width */
+@media (max-width: 343px) {
+    /* add style required under 343px width */
     #blog-content {
         font-size: 12px;
     }
@@ -94,6 +110,12 @@ a {text-decoration: none; }
     }
     #comments {
         font-size: 12px;
+    }
+    #navbar.js {
+        display: none;
+    }
+    #navbar {
+        font-size: 15px;
     }
 }
 
@@ -133,24 +155,24 @@ img{margin-bottom:-5px}a{color:inherit}
 
 .w3-navbar{list-style-type:none;margin:0;padding:0;overflow:hidden}
 .w3-navbar li{float:left}.w3-navbar li a,.w3-navitem,.w3-navbar li .w3-btn,.w3-navbar li .w3-input{display:block;padding:8px 16px}.w3-navbar li .w3-btn,.w3-navbar li .w3-input{border:none;outline:none;width:100%}
-.w3-navbar li a:hover{color:#000;background-color:#ccc}
+.w3-navbar li a:hover{color:black;background-color:#ffefda}
 .w3-navbar .w3-dropdown-hover,.w3-navbar .w3-dropdown-click{position:static}
 .w3-navbar .w3-dropdown-hover:hover,.w3-navbar .w3-dropdown-hover:first-child,.w3-navbar .w3-dropdown-click:hover{background-color:#ccc;color:#000}
 .w3-navbar a,.w3-topnav a,.w3-sidenav a,.w3-dropdown-content a,.w3-accordion-content a,.w3-dropnav a,.w3-navblock a{text-decoration:none!important}
 .w3-navbar .w3-opennav.w3-right{float:right!important}.w3-topnav{padding:8px 8px}
 
-/* next bit includes <300px break point to vertical list */
+/* next bit includes <343px break point to vertical list */
 .w3-layout-container,.w3-cell-row{display:table;width:100%}.w3-layout-row{display:table-row}.w3-layout-cell,.w3-layout-col,.w3-cell{display:table-cell}
 .w3-layout-top,.w3-cell-top{vertical-align:top}.w3-layout-middle,.w3-cell-middle{vertical-align:middle}.w3-layout-bottom,.w3-cell-bottom{vertical-align:bottom}
 .w3-hide{display:none!important}.w3-show-block,.w3-show{display:block!important}.w3-show-inline-block{display:inline-block!important}
-@media (max-width:300px){.w3-modal-content{margin:0 10px;width:auto!important}.w3-modal{padding-top:30px}
+@media (max-width:343px){.w3-modal-content{margin:0 10px;width:auto!important}.w3-modal{padding-top:30px}
 
 
 /* makes navbar drop to a list in a narrow viewport */
 .w3-topnav a{display:block}.w3-navbar li:not(.w3-opennav){float:none;width:100%!important}.w3-navbar li.w3-right{float:none!important}
 
-/* centres text when in narrow viewport */
-.w3-topnav,.w3-navbar{text-align:center}.w3-hide-small{display:none!important}.w3-layout-col,.w3-mobile{display:block;width:100%!important}.w3-bar-item.w3-mobile,.w3-dropdown-hover.w3-mobile,.w3-dropdown-click.w3-mobile{text-align:center}
+/* algns text left when in narrow viewport */
+.w3-topnav,.w3-navbar{text-align:left}.w3-hide-small{display:none!important}.w3-layout-col,.w3-mobile{display:block;width:100%!important}.w3-bar-item.w3-mobile,.w3-dropdown-hover.w3-mobile,.w3-dropdown-click.w3-mobile{text-align:center}
 
 /* makes background black in narrow viewport */
 .w3-dropdown-hover.w3-mobile,.w3-dropdown-hover.w3-mobile .w3-btn,.w3-dropdown-hover.w3-mobile .w3-button,.w3-dropdown-click.w3-mobile,.w3-dropdown-click.w3-mobile .w3-btn,.w3-dropdown-click.w3-mobile .w3-button{width:100%}}

@@ -1,3 +1,9 @@
+<!--
+V3 of this page to show listed titles of blogs with a 2 line preview of each
+Clicking anywhere on title or preview should link to ../articles/blog-title page
+ -->
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,35 +45,34 @@
 </div>
 
 <!-- Blog Index & Details -->
-<div id="blogs">
-    <div class="container">
-        <div id="blog-index">
-            <h3>the blogs...</h3>
-            <a href="#blog-title"><table id="index">
-                <tr></tr>
-            </table></a>
-        </div>
 
-        <div id="blog-details">
-            <div id="blog-title" style="color:saddlebrown;font-size:150%;font-weight:bold;margin:25px;text-align:center"></div>
-            <div id="blog-author" style="font-weight:bold;text-align:center"></div>
-            <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
-            <img id="blog-image" src="" alt="blog image"></img>
-            <div id="blog-content"></div>
+<!--
+Change this section to include...
+- divs for blog n, 3, 2, 1
+- to include title, preview, date, author
+ -->
 
-            <div id="comments">
-                <div id="comment-header">
-                    <h4>comments...</h4>
-                </div>
-                <div id="blog-comments"></div>
-            </div>
-            
-            <div id="new-comment">
-                <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="your thoughts..."></textarea>                
-                <button id="submit-button" value="Submit">Submit</button>
-            </div>
-        </div>
-    </div>
+<!-- Blog Index & Preview -->
+
+<div id="blogs" class="container">
+  <h3>the blogs...</h3>
+  <div id="blog-7">
+    <div id="blog-title-7" style="color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+    <div id="blog-preview-7" style="font-size:90%"></div>
+    <div id="blog-author-7" style="font-weight:bold;text-align:center;float:left"></div>
+    <div id="blog-createdDate-7" style="font-style:italic;text-align:center;float:left"></div>
+    <div style="clear:both;"></div>
+  </div>
+
+  <div id="blog-6">
+    <div id="blog-title-6" style="color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+    <div id="blog-preview-6" style="font-size:90%"></div>
+    <div id="blog-author-6" style="font-weight:bold;text-align:center;float:left"></div>
+    <div id="blog-createdDate-6" style="font-style:italic;text-align:center;float:left"></div>
+    <div style="clear:both;"></div>
+  </div>
+
+
 </div>
 
 <!-- Footer -->
@@ -96,101 +101,43 @@ $(document).ready(function () {
         }
     });
 
-    $("#blog-details").hide();
+    //get blog-7 details from cosmic api
+    var blog7 = "https://api.cosmicjs.com/v1/matttea-blog-app/object/style-over-content";
+    $.get(blog7, function (data) {
+        if (!!data) {
+            var title = data.object.title;
+            var author = data.object.metadata.author.title;
+            var createdDate = data.object.created_at;
+            var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+            var content = data.object.content; // do something here to only return first xx chars
+            var preview = content.substring(0, 150) + "...  >>";
 
-    //display index of blog titles
-    var blogIndex = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
-    $.get(blogIndex, function (data) {
-        var tr;
-        if (data.objects.length > 0) {
-            for (var i = 0; i < data.objects.length; i++) {                         
-                tr = $('<tr/>');
-                tr.append("<td>" + data.objects[i].title + "</td>");
-                $("#index").append(tr);
-            }
-            console.log('index query finished, got', data);
-        } else {
-            $("#index").empty();
-            $("#index").append('Oops! Something went wrong, no blogs found.');
-            console.log('query finished, no blogs found');                
+            $("#blog-title-7").html(title);
+            $("#blog-author-7").html(author);
+            $("#blog-createdDate-7").html(displayDate);
+            $("#blog-preview-7").html(preview);
         }
     });
 
-    //blog display on index row click
-    $('#index').on('click', 'tr', function() {
-        console.log('You clicked row ' + ($(this).index()));
-        
-        var currentRow = $(this).closest("tr");
-        var cellText = currentRow.find("td:eq(0)").text();
-        console.log('The content of this table row is ' + cellText);
-        
-        var blogIndexClick = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + cellText;
+    //get blog-6 details from cosmic api
+    var blog6 = "https://api.cosmicjs.com/v1/matttea-blog-app/object/realisation-redesign-and-recognition";
+    $.get(blog6, function (data) {
+        if (!!data) {
+            var title = data.object.title;
+            var author = data.object.metadata.author.title;
+            var createdDate = data.object.created_at;
+            var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+            var content = data.object.content; // do something here to only return first xx chars
+            var preview = content.substring(0, 150) + "...  >>";
 
-        $.get(blogIndexClick, function (data) {
-            if (!!data.objects) {
-                var title = data.objects[0].title;
-                var author = data.objects[0].metadata.author.title;
-                var createdDate = data.objects[0].created_at;
-                var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
-                var blogImage = data.objects[0].metadata.hero.url;
-                var content = data.objects[0].content;
-                if (!!data.objects[0].metadata.comment) {
-                    var comments = data.objects[0].metadata.comment.content;
-                    $("#comments").show();
-                    $("#blog-comments").empty();
-                    $("#blog-comments").append(comments);                        
-                } else {
-                    $("#comments").hide();
-                    $("#blog-comments").empty();
-                }
-
-                $("#blog-details").show();                
-                $("#blog-title").html(title);
-                $("#blog-author").html(author);
-                $("#blog-createdDate").html(displayDate);
-                $("#blog-image").attr("src", blogImage);
-                $("#blog-content").html(content);
-                console.log('query finished, got', data);                      
-            } else {
-                $("#blog-title").empty();
-                $("#blog-author").empty();
-                $("#blog-createdDate").empty();
-                $("#blog-image").empty();
-                $("#blog-content").empty();
-                $("#comments").hide();
-                $("#blog-comments").empty();
-
-                $("#blog-content").append('Sorry, that link didn\'t work. Please try searching by title.');
-                console.log('query finished, no article found');
-            }
-        });
+            $("#blog-title-6").html(title);
+            $("#blog-author-6").html(author);
+            $("#blog-createdDate-6").html(displayDate);
+            $("#blog-preview-6").html(preview);
+        }
     });
 
-    //POST /comments to Cosmic
-    $("#submit-button").click(function (element) {
-        
-        var newComment = $("#comments-box").val();
-        console.log('newComment: ', newComment);
 
-        var d = new Date();
-        var date = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
-        var commentValue = date + ' ' + d.getHours() + ':' + d.getMinutes() + "<br>" + newComment + "<br><br>";
-
-        console.log(commentValue);
-
-        var commentParams = {
-            type_slug: 'comments',
-            title: date + ' ' + d.getHours() + ':' + d.getMinutes() + ' comment',
-            content: commentValue
-        };            
-        var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
-        $.post(apiPost, commentParams);
-        var commentParamsJson = JSON.stringify(commentParams);
-        console.log('commentParamsJson: ' + commentParamsJson);
-
-        $("#comments-box").val('');
-
-    });
 });
 
 </script>

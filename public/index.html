@@ -7,6 +7,8 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Questrial"/>
 <link rel="icon" type="image/png" href="favicon.png"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
 <title>B.A(ng)</title>
 
 <style></style>
@@ -47,16 +49,18 @@
     <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
     <img id="blog-image" src="" alt="blog image"></img>
     <div id="blog-content"></div>
-    
+    <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
+    <g:plusone></g:plusone>
+
     <div id="comments">
         <div id="comment-header">
             <h4>comments...</h4>
         </div>
         <div id="blog-comments"></div>
     </div>
-    
+
     <div id="new-comment">
-        <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="your thoughts..."></textarea>                
+        <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="your thoughts..."></textarea>
         <button id="submit-button" value="Submit">Submit</button>
     </div>
 
@@ -102,7 +106,7 @@ $(document).ready(function () {
             var comments = data.objects[0].metadata.comment.content;
             $("#comments").show();
             $("#blog-comments").empty();
-            $("#blog-comments").append(comments);                        
+            $("#blog-comments").append(comments);
         } else {
             $("#comments").hide();
             $("#blog-comments").empty();
@@ -119,7 +123,7 @@ $(document).ready(function () {
 
     //POST /comments to Cosmic
     $("#submit-button").click(function (element) {
-        
+
         var newComment = $("#comments-box").val();
         console.log('newComment: ', newComment);
 
@@ -133,7 +137,7 @@ $(document).ready(function () {
             type_slug: 'comments',
             title: date + ' ' + d.getHours() + ':' + d.getMinutes() + ' comment',
             content: commentValue
-        };            
+        };
         var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
         $.post(apiPost, commentParams);
         var commentParamsJson = JSON.stringify(commentParams);

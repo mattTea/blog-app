@@ -1,9 +1,4 @@
-<!--
-V3 of this page to show listed titles of blogs with a 2 line preview of each
-Clicking anywhere on title or preview should link to ../articles/blog-title page
- -->
-
-
+<!--v3-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,35 +39,64 @@ Clicking anywhere on title or preview should link to ../articles/blog-title page
     </div>
 </div>
 
-<!-- Blog Index & Details -->
-
-<!--
-Change this section to include...
-- divs for blog n, 3, 2, 1
-- to include title, preview, date, author
- -->
-
 <!-- Blog Index & Preview -->
-
 <div id="blogs" class="container">
   <h3>the blogs...</h3>
-  <a href="#"><div id="blog-7" style="margin-bottom:2em">
-    <div id="blog-title-7" style="color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+  <a href="style-over-content.html"><div id="blog-7" style="margin-bottom:2em">
+    <div id="blog-title-7" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
     <div id="blog-preview-7" style="font-size:90%"></div>
-    <div id="blog-author-7" style="float:left"></div>
-    <div id="blog-createdDate-7" style="font-style:italic;margin-left:2em;float:left"></div>
+    <div id="blog-author-7" style="color:grey;font-size:80%;float:left"></div>
+    <div id="blog-createdDate-7" style="color:grey;font-size:80%;margin-left:2em;float:left"></div>
     <div style="clear:both;"></div>
   </div></a>
 
-  <a href="#"><div id="blog-6" style="margin-bottom:2em">
-    <div id="blog-title-6" style="color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+  <a href="realisation-redesign-recognition.html"><div id="blog-6" style="margin-bottom:2em">
+    <div id="blog-title-6" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
     <div id="blog-preview-6" style="font-size:90%"></div>
-    <div id="blog-author-6" style="float:left"></div>
-    <div id="blog-createdDate-6" style="font-style:italic;margin-left:2em;float:left"></div>
+    <div id="blog-author-6" style="color:grey;font-size:80%;float:left"></div>
+    <div id="blog-createdDate-6" style="color:grey;font-size:80%;margin-left:2em;float:left"></div>
     <div style="clear:both;"></div>
   </div></a>
 
+  <a href="projects-side-projects-prattle.html"><div id="blog-5" style="margin-bottom:2em">
+    <div id="blog-title-5" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+    <div id="blog-preview-5" style="font-size:90%"></div>
+    <div id="blog-author-5" style="color:grey;font-size:80%;float:left"></div>
+    <div id="blog-createdDate-5" style="color:grey;font-size:80%;margin-left:2em;float:left"></div>
+    <div style="clear:both;"></div>
+  </div></a>
 
+  <a href="more-of-the-iceberg.html"><div id="blog-4" style="margin-bottom:2em">
+    <div id="blog-title-4" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+    <div id="blog-preview-4" style="font-size:90%"></div>
+    <div id="blog-author-4" style="color:grey;font-size:80%;float:left"></div>
+    <div id="blog-createdDate-4" style="color:grey;font-size:80%;margin-left:2em;float:left"></div>
+    <div style="clear:both;"></div>
+  </div></a>
+
+  <a href="tea-for-two.html"><div id="blog-3" style="margin-bottom:2em">
+    <div id="blog-title-3" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+    <div id="blog-preview-3" style="font-size:90%"></div>
+    <div id="blog-author-3" style="color:grey;font-size:80%;float:left"></div>
+    <div id="blog-createdDate-3" style="color:grey;font-size:80%;margin-left:2em;float:left"></div>
+    <div style="clear:both;"></div>
+  </div></a>
+
+  <a href="beginnings-of-addiction.html"><div id="blog-2" style="margin-bottom:2em">
+    <div id="blog-title-2" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+    <div id="blog-preview-2" style="font-size:90%"></div>
+    <div id="blog-author-2" style="color:grey;font-size:80%;float:left"></div>
+    <div id="blog-createdDate-2" style="color:grey;font-size:80%;margin-left:2em;float:left"></div>
+    <div style="clear:both;"></div>
+  </div></a>
+
+  <a href="taster.html"><div id="blog-1" style="margin-bottom:2em">
+    <div id="blog-title-1" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+    <div id="blog-preview-1" style="font-size:90%"></div>
+    <div id="blog-author-1" style="color:grey;font-size:80%;float:left"></div>
+    <div id="blog-createdDate-1" style="color:grey;font-size:80%;margin-left:2em;float:left"></div>
+    <div style="clear:both;"></div>
+  </div></a>
 </div>
 
 <!-- Footer -->
@@ -109,8 +133,8 @@ $(document).ready(function () {
             var author = data.object.metadata.author.title;
             var createdDate = data.object.created_at;
             var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
-            var content = data.object.content; // do something here to only return first xx chars
-            var preview = content.substring(0, 150) + "...  >>";
+            var content = data.object.content;
+            var preview = content.substring(0, 150) + '... >>';
 
             $("#blog-title-7").html(title);
             $("#blog-author-7").html(author);
@@ -137,7 +161,91 @@ $(document).ready(function () {
         }
     });
 
+    //get blog-5 details from cosmic api
+    var blog5 = "https://api.cosmicjs.com/v1/matttea-blog-app/object/projects-side-projects-and-prattle";
+    $.get(blog5, function (data) {
+        if (!!data) {
+            var title = data.object.title;
+            var author = data.object.metadata.author.title;
+            var createdDate = data.object.created_at;
+            var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+            var content = data.object.content; // do something here to only return first xx chars
+            var preview = content.substring(0, 150) + "...  >>";
 
+            $("#blog-title-5").html(title);
+            $("#blog-author-5").html(author);
+            $("#blog-createdDate-5").html(displayDate);
+            $("#blog-preview-5").html(preview);
+        }
+    });
+
+    //get blog-4 details from cosmic api
+    var blog4 = "https://api.cosmicjs.com/v1/matttea-blog-app/object/iced-tea-more-of-the-iceberg";
+    $.get(blog4, function (data) {
+        if (!!data) {
+            var title = data.object.title;
+            var author = data.object.metadata.author.title;
+            var createdDate = data.object.created_at;
+            var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+            var content = data.object.content; // do something here to only return first xx chars
+            var preview = content.substring(0, 150) + "...  >>";
+
+            $("#blog-title-4").html(title);
+            $("#blog-author-4").html(author);
+            $("#blog-createdDate-4").html(displayDate);
+            $("#blog-preview-4").html(preview);
+        }
+    });
+
+    //get blog-3 details from cosmic api
+    var blog3 = "https://api.cosmicjs.com/v1/matttea-blog-app/object/sharing-tea-for-two";
+    $.get(blog3, function (data) {
+        if (!!data) {
+            var title = data.object.title;
+            var author = data.object.metadata.author.title;
+            var createdDate = data.object.created_at;
+            var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+            var content = data.object.content;
+            var preview = content.substring(0, 150) + "...  >>";
+
+            $("#blog-title-3").html(title);
+            $("#blog-author-3").html(author);
+            $("#blog-createdDate-3").html(displayDate);
+            $("#blog-preview-3").html(preview);
+        }
+    });
+
+    //get blog-2 details from cosmic api
+    var blog2 = "https://api.cosmicjs.com/v1/matttea-blog-app/object/the-beginnings-of-addiction";
+    $.get(blog2, function (data) {
+        var title = data.object.title;
+        var author = data.object.metadata.author.title;
+        var createdDate = data.object.created_at;
+        var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+        var content = data.object.content;
+        var preview = content.substring(0, 150) + "...  >>";
+
+        $("#blog-title-2").html(title);
+        $("#blog-author-2").html(author);
+        $("#blog-createdDate-2").html(displayDate);
+        $("#blog-preview-2").html(preview);
+    });
+
+    //get blog-1 details from cosmic api
+    var blog1 = "https://api.cosmicjs.com/v1/matttea-blog-app/object/a-taster";
+    $.get(blog1, function (data) {
+        var title = data.object.title;
+        var author = data.object.metadata.author.title;
+        var createdDate = data.object.created_at;
+        var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+        var content = data.object.content;
+        var preview = content.substring(0, 150) + "...  >>";
+
+        $("#blog-title-1").html(title);
+        $("#blog-author-1").html(author);
+        $("#blog-createdDate-1").html(displayDate);
+        $("#blog-preview-1").html(preview);
+    });
 });
 
 </script>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Questrial"/>
+<link rel="icon" type="image/png" href="favicon.png"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<title>B.A(ng)</title>
+
+<style></style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav>
+    <ul class="w3-navbar w3-black" id="navbar">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="articles.html">Blogs</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+</nav>
+
+
+<div class="main">
+
+<!-- Headline -->
+<div id="headline">
+    <div class="container">
+        <header>
+            <h1><span>B.A(ng)</span></h1>
+            <h2>from business analyst to engineer</h2>
+        </header>
+        <div id="blurb">
+            <p>chatting about my experiences learning to code<br>and still trying to be a business analyst</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Blog -->
+<div class="container" id="blogs">
+    <div id="blog-title" style="color:saddlebrown;font-size:150%;font-weight:bold;margin:25px;text-align:center"></div>
+    <div id="blog-author" style="font-weight:bold;text-align:center"></div>
+    <div id="blog-createdDate" style="font-style:italic;text-align:center"></div>
+    <img id="blog-image" src="" alt="blog image"></img>
+    <div id="blog-content"></div>
+
+    <div id="comments">
+        <div id="comment-header">
+            <h4>comments...</h4>
+        </div>
+        <div id="blog-comments"></div>
+    </div>
+
+    <div id="new-comment">
+        <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="your thoughts..."></textarea>
+        <button id="submit-button" value="Submit">Submit</button>
+    </div>
+
+</div>
+
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container" style="text-align:center">
+        <p>mattTea | B.A(ng)</p>
+    </div>
+</footer>
+
+</div>
+
+</body>
+
+<script>
+//when page has fully rendered then execute this code
+$(document).ready(function () {
+
+    $("#navbar").addClass("js").before('<div id="menu" style="color:#784300"><span>☰</span></div>');
+    $("#menu").click(function() {
+        $("#navbar").slideToggle();
+    });
+
+    $(window).resize(function() {
+        if(window.innerWidth > 343) {
+            $("#navbar").removeAttr("style");
+        }
+    });
+
+    //display current page blog details
+    var blog = "https://api.cosmicjs.com/v1/matttea-blog-app/object/sharing-tea-for-two";
+    $.get(blog, function (data) {
+        var title = data.object.title;
+        var author = data.object.metadata.author.title;
+        var createdDate = data.object.created_at;
+        var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+        var image = data.object.metadata.hero.url;
+        var content = data.object.content;
+        if (!!data.object.metadata.comment) {
+            var comments = data.object.metadata.comment.content;
+            $("#comments").show();
+            $("#blog-comments").empty();
+            $("#blog-comments").append(comments);
+        } else {
+            $("#comments").hide();
+            $("#blog-comments").empty();
+        }
+
+        $("#blog-title").html(title);
+        $("#blog-author").html(author);
+        $("#blog-createdDate").html(displayDate);
+        $("#blog-image").attr("src", image);
+        $("#blog-content").html(content);
+
+        console.log('latest blog returned, got', data);
+    });
+
+    //POST /comments to Cosmic
+    $("#submit-button").click(function (element) {
+
+        var newComment = $("#comments-box").val();
+        console.log('newComment: ', newComment);
+
+        var d = new Date();
+        var date = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
+        var commentValue = date + ' ' + d.getHours() + ':' + d.getMinutes() + "<br>" + newComment + "<br><br>";
+
+        console.log(commentValue);
+
+        var commentParams = {
+            type_slug: 'comments',
+            title: date + ' ' + d.getHours() + ':' + d.getMinutes() + ' comment',
+            content: commentValue
+        };
+        var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
+        $.post(apiPost, commentParams);
+        var commentParamsJson = JSON.stringify(commentParams);
+        console.log('commentParamsJson: ' + commentParamsJson);
+
+        $("#comments-box").val('');
+
+    });
+
+});
+
+</script>
+
+
+
+</html>

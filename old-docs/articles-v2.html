@@ -1,3 +1,4 @@
+<!--v2-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,9 +62,9 @@
                 </div>
                 <div id="blog-comments"></div>
             </div>
-            
+
             <div id="new-comment">
-                <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="your thoughts..."></textarea>                
+                <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="your thoughts..."></textarea>
                 <button id="submit-button" value="Submit">Submit</button>
             </div>
         </div>
@@ -103,7 +104,7 @@ $(document).ready(function () {
     $.get(blogIndex, function (data) {
         var tr;
         if (data.objects.length > 0) {
-            for (var i = 0; i < data.objects.length; i++) {                         
+            for (var i = 0; i < data.objects.length; i++) {
                 tr = $('<tr/>');
                 tr.append("<td>" + data.objects[i].title + "</td>");
                 $("#index").append(tr);
@@ -112,18 +113,18 @@ $(document).ready(function () {
         } else {
             $("#index").empty();
             $("#index").append('Oops! Something went wrong, no blogs found.');
-            console.log('query finished, no blogs found');                
+            console.log('query finished, no blogs found');
         }
     });
 
     //blog display on index row click
     $('#index').on('click', 'tr', function() {
         console.log('You clicked row ' + ($(this).index()));
-        
+
         var currentRow = $(this).closest("tr");
         var cellText = currentRow.find("td:eq(0)").text();
         console.log('The content of this table row is ' + cellText);
-        
+
         var blogIndexClick = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles/search?metafield_key=headline&metafield_value=" + cellText;
 
         $.get(blogIndexClick, function (data) {
@@ -138,19 +139,19 @@ $(document).ready(function () {
                     var comments = data.objects[0].metadata.comment.content;
                     $("#comments").show();
                     $("#blog-comments").empty();
-                    $("#blog-comments").append(comments);                        
+                    $("#blog-comments").append(comments);
                 } else {
                     $("#comments").hide();
                     $("#blog-comments").empty();
                 }
 
-                $("#blog-details").show();                
+                $("#blog-details").show();
                 $("#blog-title").html(title);
                 $("#blog-author").html(author);
                 $("#blog-createdDate").html(displayDate);
                 $("#blog-image").attr("src", blogImage);
                 $("#blog-content").html(content);
-                console.log('query finished, got', data);                      
+                console.log('query finished, got', data);
             } else {
                 $("#blog-title").empty();
                 $("#blog-author").empty();
@@ -168,7 +169,7 @@ $(document).ready(function () {
 
     //POST /comments to Cosmic
     $("#submit-button").click(function (element) {
-        
+
         var newComment = $("#comments-box").val();
         console.log('newComment: ', newComment);
 
@@ -182,7 +183,7 @@ $(document).ready(function () {
             type_slug: 'comments',
             title: date + ' ' + d.getHours() + ':' + d.getMinutes() + ' comment',
             content: commentValue
-        };            
+        };
         var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
         $.post(apiPost, commentParams);
         var commentParamsJson = JSON.stringify(commentParams);

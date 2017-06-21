@@ -102,15 +102,34 @@ $(document).ready(function () {
         var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
         var image = data.object.metadata.hero.url;
         var content = data.object.content;
-        if (!!data.object.metadata.comment) {
-            var comments = data.object.metadata.comment.content;
-            $("#comments").show();
-            $("#blog-comments").empty();
-            $("#blog-comments").append(comments);
-        } else {
-            $("#comments").hide();
-            $("#blog-comments").empty();
-        }
+
+        //search for comments
+        var blogSlug = data.object.slug;
+        var linkedComment = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/comments";
+        $.get(linkedComment, function (data) {
+            var blogComments =[];
+            if (data.objects.length > 0) {
+                for (var i = 0; i < data.objects.length; i++) {
+                    if (data.objects[i].metadata !== null && data.objects[i].metadata.blogslugname === blogSlug) {
+                        blogComments.push(data.objects[i]);
+                    }
+                }
+                console.log(blogComments.length);
+
+                // *TO DO create blogComment.length number of divs to display all comments*
+                // populate comments into divs #blog-comments-1 to n below
+
+                //display comments
+                if (blogComments.length > 0) {
+                    $("#comments").show();
+                    $("#blog-comments").empty();
+                    $("#blog-comments").append(blogComments[0].content);
+                } else {
+                    $("#comments").hide();
+                    $("#blog-comments").empty();
+                }
+            }
+        });
 
         $("#blog-title").html(title);
         $("#blog-author").html(author);
@@ -136,15 +155,32 @@ $(document).ready(function () {
         var commentParams = {
             type_slug: 'comments',
             title: date + ' ' + d.getHours() + ':' + d.getMinutes() + ' comment',
-            content: commentValue
+            content: commentValue,
+            metafields: [{
+                key: 'blogslugname',
+                type: 'text',
+                value: 'a-taster' // *TO DO remove this hardcoded value and change to blog-slug*
+            }]
         };
         var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
-        $.post(apiPost, commentParams);
+
+        $.ajax({
+            type: "POST",
+            url: apiPost,
+            data: JSON.stringify(commentParams),
+            contentType: "application/json",
+            success: function(data){
+                alert('Thanks for your thoughts!');
+            },
+            failure: function(errMsg) {
+                alert(errMsg);
+            }
+        });
+
         var commentParamsJson = JSON.stringify(commentParams);
         console.log('commentParamsJson: ' + commentParamsJson);
 
         $("#comments-box").val('');
-
     });
 
 });

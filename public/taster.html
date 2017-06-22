@@ -116,14 +116,17 @@ $(document).ready(function () {
                 }
                 console.log(blogComments.length);
 
-                // *TO DO create blogComment.length number of divs to display all comments*
-                // populate comments into divs #blog-comments-1 to n below
-
-                //display comments
+                //create & display separate div for each comment
                 if (blogComments.length > 0) {
                     $("#comments").show();
-                    $("#blog-comments").empty();
-                    $("#blog-comments").append(blogComments[0].content);
+                    $("#blog-comments").empty(); //need this in new function?
+                    for (var j = 0; j < blogComments.length; j++) {
+                        var div = document.createElement('div');
+                        document.body.appendChild(div);
+                        document.getElementById("blog-comments").appendChild(div);
+                        div.id = 'blog-comments-' + j;
+                        $("#blog-comments-" + j).append(blogComments[j].content);
+                    }
                 } else {
                     $("#comments").hide();
                     $("#blog-comments").empty();
@@ -148,7 +151,7 @@ $(document).ready(function () {
 
         var d = new Date();
         var date = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
-        var commentValue = date + ' ' + d.getHours() + ':' + d.getMinutes() + "<br>" + newComment + "<br><br>";
+        var commentValue = date + ' ' + d.getHours() + ':' + (d.getMinutes()<10?'0':'') + d.getMinutes() + "<br>" + newComment + "<br><br>";
 
         console.log(commentValue);
 

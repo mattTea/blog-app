@@ -1,3 +1,4 @@
+<!-- v3 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,15 +103,37 @@ $(document).ready(function () {
         var latestDisplayDate = latestCreatedDate.charAt(8) + latestCreatedDate.charAt(9) + '/' + latestCreatedDate.charAt(5) + latestCreatedDate.charAt(6) + '/' + latestCreatedDate.charAt(0) + latestCreatedDate.charAt(1) + latestCreatedDate.charAt(2) + latestCreatedDate.charAt(3);
         var latestImage = data.objects[0].metadata.hero.url;
         var latestContent = data.objects[0].content;
-        if (!!data.objects[0].metadata.comment) {
-            var comments = data.objects[0].metadata.comment.content;
-            $("#comments").show();
-            $("#blog-comments").empty();
-            $("#blog-comments").append(comments);
-        } else {
-            $("#comments").hide();
-            $("#blog-comments").empty();
-        }
+
+        //search for comments
+        var blogSlug = data.objects[0].slug;
+        var linkedComment = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/comments";
+        $.get(linkedComment, function (data) {
+            var blogComments =[];
+            if (data.objects.length > 0) {
+                for (var i = 0; i < data.objects.length; i++) {
+                    if (data.objects[i].metadata !== null && data.objects[i].metadata.blogslugname === blogSlug) {
+                        blogComments.push(data.objects[i]);
+                    }
+                }
+                console.log(blogComments.length);
+
+                //create & display separate div for each comment
+                if (blogComments.length > 0) {
+                    $("#comments").show();
+                    $("#blog-comments").empty(); //need this in new function?
+                    for (var j = 0; j < blogComments.length; j++) {
+                        var div = document.createElement('div');
+                        document.body.appendChild(div);
+                        document.getElementById("blog-comments").appendChild(div);
+                        div.id = 'blog-comments-' + j;
+                        $("#blog-comments-" + j).append(blogComments[j].content);
+                    }
+                } else {
+                    $("#comments").hide();
+                    $("#blog-comments").empty();
+                }
+            }
+        });
 
         $("#blog-title").html(latestTitle);
         $("#blog-author").html(latestAuthor);
@@ -129,22 +152,39 @@ $(document).ready(function () {
 
         var d = new Date();
         var date = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
-        var commentValue = date + ' ' + d.getHours() + ':' + d.getMinutes() + "<br>" + newComment + "<br><br>";
+        var commentValue = date + ' ' + d.getHours() + ':' + (d.getMinutes()<10?'0':'') + d.getMinutes() + "<br>" + newComment + "<br><br>";
 
         console.log(commentValue);
 
         var commentParams = {
             type_slug: 'comments',
             title: date + ' ' + d.getHours() + ':' + d.getMinutes() + ' comment',
-            content: commentValue
+            content: commentValue,
+            metafields: [{
+                key: 'blogslugname',
+                type: 'text',
+                value: 'style-over-content' // *TO DO remove this hardcoded value and change to latest blog-slug*
+            }]
         };
         var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";
-        $.post(apiPost, commentParams);
+
+        $.ajax({
+            type: "POST",
+            url: apiPost,
+            data: JSON.stringify(commentParams),
+            contentType: "application/json",
+            success: function(data){
+                alert('Thanks for your thoughts!');
+            },
+            failure: function(errMsg) {
+                alert(errMsg);
+            }
+        });
+
         var commentParamsJson = JSON.stringify(commentParams);
         console.log('commentParamsJson: ' + commentParamsJson);
 
         $("#comments-box").val('');
-
     });
 
 });

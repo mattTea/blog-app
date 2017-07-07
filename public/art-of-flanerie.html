@@ -19,7 +19,7 @@
 <!-- Navigation -->
 <nav>
     <ul class="w3-navbar w3-black" id="navbar">
-        <li><a href="#" style="font-weight:bold">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="articles.html">Blogs</a></li>
         <li><a href="about.html">About</a></li>
     </ul>
@@ -42,7 +42,7 @@
 </div>
 
 
-<!-- Latest Blog -->
+<!-- Blog -->
 <div class="container" id="blogs">
     <div id="blog-title" style="color:saddlebrown;font-size:150%;font-weight:bold;margin:25px;text-align:center"></div>
     <div id="blog-author" style="font-weight:bold;text-align:center"></div>
@@ -67,7 +67,7 @@
 </div>
 
 
-<!-- Footer  MAKE <section> TO FIX TO BOTTOM WHEN MAKING AUTHOR DETAILS FLOAT? -->
+<!-- Footer -->
 <footer id="footer">
     <div class="container" style="text-align:center">
         <p>mattTea | B.A(ng)</p>
@@ -93,18 +93,18 @@ $(document).ready(function () {
         }
     });
 
-    //display latest blog on first page load
-    var latestBlog = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/articles";
-    $.get(latestBlog, function (data) {
-        var latestTitle = data.objects[0].title;
-        var latestAuthor = data.objects[0].metadata.author.title;
-        var latestCreatedDate = data.objects[0].created_at;
-        var latestDisplayDate = latestCreatedDate.charAt(8) + latestCreatedDate.charAt(9) + '/' + latestCreatedDate.charAt(5) + latestCreatedDate.charAt(6) + '/' + latestCreatedDate.charAt(0) + latestCreatedDate.charAt(1) + latestCreatedDate.charAt(2) + latestCreatedDate.charAt(3);
-        var latestImage = data.objects[0].metadata.hero.url;
-        var latestContent = data.objects[0].content;
+    //display current page blog details
+    var blog = "https://api.cosmicjs.com/v1/matttea-blog-app/object/the-art-of-flanerie";
+    $.get(blog, function (data) {
+        var title = data.object.title;
+        var author = data.object.metadata.author.title;
+        var createdDate = data.object.created_at;
+        var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+        var image = data.object.metadata.hero.url;
+        var content = data.object.content;
 
         //search for comments
-        var blogSlug = data.objects[0].slug;
+        var blogSlug = data.object.slug;
         var linkedComment = "https://api.cosmicjs.com/v1/matttea-blog-app/object-type/comments";
         $.get(linkedComment, function (data) {
             var blogComments =[];
@@ -134,11 +134,11 @@ $(document).ready(function () {
             }
         });
 
-        $("#blog-title").html(latestTitle);
-        $("#blog-author").html(latestAuthor);
-        $("#blog-createdDate").html(latestDisplayDate);
-        $("#blog-image").attr("src", latestImage);
-        $("#blog-content").html(latestContent);
+        $("#blog-title").html(title);
+        $("#blog-author").html(author);
+        $("#blog-createdDate").html(displayDate);
+        $("#blog-image").attr("src", image);
+        $("#blog-content").html(content);
 
         console.log('latest blog returned, got', data);
     });
@@ -162,7 +162,7 @@ $(document).ready(function () {
             metafields: [{
                 key: 'blogslugname',
                 type: 'text',
-                value: 'the-art-of-flanerie' // *TO DO remove this hardcoded value and change to latest blog-slug*
+                value: 'the-art-of-flanerie' // *TO DO remove this hardcoded value and change to blog-slug*
             }]
         };
         var apiPost = "https://api.cosmicjs.com/v1/matttea-blog-app/add-object";

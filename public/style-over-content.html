@@ -147,8 +147,13 @@ $(document).ready(function () {
     //POST /comments to Cosmic
     $("#submit-button").click(function (element) {
 
-        var newComment = $("#comments-box").val();
-        console.log('newComment: ', newComment);
+        if ($("#comments-box").val().length > 0) {
+            var newComment = $("#comments-box").val();
+            console.log('newComment: ', newComment);
+        } else {
+            alert('Comments box is empty, please add a comment to submit.');
+            return;
+        }
 
         if ($("#comments-name").val().length > 0) {
             var commentAuthor = 'posted by... ' + $("#comments-name").val();

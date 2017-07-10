@@ -61,6 +61,7 @@
 
     <div id="new-comment">
         <textarea id="comments-box" name="new-comment" rows="4" cols="50" placeholder="your thoughts..."></textarea>
+        <textarea id="comments-name" name="new-comment-name" rows="1" cols="50" placeholder="your name..."></textarea>
         <button id="submit-button" value="Submit">Submit</button>
     </div>
 
@@ -149,9 +150,16 @@ $(document).ready(function () {
         var newComment = $("#comments-box").val();
         console.log('newComment: ', newComment);
 
+        if ($("#comments-name").val().length > 0) {
+            var commentAuthor = 'posted by... ' + $("#comments-name").val();
+            console.log('commentAuthor: ', commentAuthor);
+        } else {
+            var commentAuthor = 'posted by... ' + 'anon';
+        }
+
         var d = new Date();
         var date = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
-        var commentValue = date + ' ' + d.getHours() + ':' + (d.getMinutes()<10?'0':'') + d.getMinutes() + "<br>" + newComment + "<br><br>";
+        var commentValue = date + ' ' + d.getHours() + ':' + (d.getMinutes()<10?'0':'') + d.getMinutes() + "<br>" + newComment + "<br>" + commentAuthor + "<br><br>";
 
         console.log(commentValue);
 
@@ -184,6 +192,7 @@ $(document).ready(function () {
         console.log('commentParamsJson: ' + commentParamsJson);
 
         $("#comments-box").val('');
+        $("#comments-name").val('');
     });
 
 });

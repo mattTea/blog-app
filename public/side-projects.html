@@ -42,24 +42,55 @@
 </div>
 
 
-<!-- Author Details -->
+<!-- Side Project Details -->
 <div id="author" class="container" style="max-width: 600px">
     <h2 style="text-align: center">the side projects...</h2>
     <div id="author-blurb">
         <p><br>There's mention of numerous side projects throughout this blog. Browse them all here.<br></p>
     </div>
 
-    <a href="http://tinygigs.herokuapp.com/" target="_blank"><div style="margin-bottom:2em;margin-top:3em">
-      <div class="proj-thumb"><img src="CaravanGig2.png"/></div>
-        <div class="proj-content">
-          <h4 class="proj-title">Tiny Gigs</h4>
-          <p>A simple React web app for live music in small London venues.</p>
-        </div>
+    <a href="http://tinygigs.herokuapp.com/" target="_blank"><div class="proj-container">
+      <div class="proj-thumb"><img src="CaravanGig2.png">
+      <div class="proj-content">
+        <h4 class="proj-title">Tiny Gigs</h4>
+        <p>A simple React web app for live music in small London venues.</p>
+      </div>
+      </div>
       <div style="clear:both"></div>
     </div></a>
 
+    <a href="https://matttea-blog.herokuapp.com" target="_blank"><div class="proj-container">
+      <div class="proj-thumb"><img src="B.png">
+      <div class="proj-content">
+        <h4 class="proj-title">My Blog</h4>
+        <p>You're already here!<br>The node.js web app described in the content of this blog.</p>
+      </div>
+      </div>
+      <div style="clear:both"></div>
+    </div></a>
 
-    <div style="text-align:center;line-height:40px">
+    <!-- <a href="https://bleippsons.herokuapp.com/" target="_blank"><div class="proj-container"> -->
+    <a href="#"><div class="proj-container">
+      <div class="proj-thumb"><img src="boss.png">
+      <div class="proj-content">
+        <h4 class="proj-title">The Plan</h4>
+        <p>A node.js anniversary and memory web app for some friends. (Link disabled).</p>
+      </div>
+      </div>
+      <div style="clear:both"></div>
+    </div></a>
+
+    <a href="https://matttea-partner-api.herokuapp.com/" target="_blank"><div class="proj-container">
+      <div class="proj-thumb"><img src="gmail-details.png">
+      <div class="proj-content">
+        <h4 class="proj-title">Partner Details Gmail plug-in</h4>
+        <p>A node.js app to return user details. Prototype api for Gmail plug-in. (Search 'matt@matt.com').</p>
+      </div>
+      </div>
+      <div style="clear:both"></div>
+    </div></a>
+
+    <div style="text-align:center;line-height:40px;padding-top:10%">
         <a href="https://github.com/mattTea" target="_blank">
             <img src="GitHub-Mark-64px.png" style="width:26px;height:26px;border:0;vertical-align:top">
         </a>
@@ -90,7 +121,7 @@ $(document).ready(function () {
     });
 
     $(window).resize(function() {
-        if(window.innerWidth > 343) {
+        if(window.innerWidth > 600) {
             $("#navbar").removeAttr("style");
         }
     });

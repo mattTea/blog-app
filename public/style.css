@@ -1,8 +1,10 @@
-.proj-thumb {
-    /*float: left;*/
+.proj-container {
+  /*margin-bottom: 2.5em;*/
+  /*margin-top: 1.5em;*/
+  margin-bottom: 10%;
+  margin-top: 10%;
 }
 .proj-thumb img {
-    /*display: block;*/
     float: left;
     width: 30%;
     height: 30%;
@@ -10,15 +12,13 @@
     min-height: 80px;
     max-width: 120px;
     max-width: 120px;
+    padding-right: 1em;
+    padding-top: 1em;
 }
 .proj-content {
-    margin-left: 25%;
-    margin-top: 1em;
     font-size: 16px;
-    /*overflow: hidden;*/
-    /*float: left;*/
+    overflow: auto;
 }
-
 
 #headline {
     padding: 20px 5%;
@@ -96,7 +96,7 @@ a {text-decoration: none; }
     font-weight: bold;
 }
 
-@media (min-width: 344px) {
+@media (min-width: 600px) {
     /* add style required over 344px width */
     #menu { /* menu is the burger image */
         display: none;
@@ -121,6 +121,22 @@ a {text-decoration: none; }
     }
     #comments {
         font-size: 13px;
+    }
+    #navbar.js {
+        display: none;
+    }
+    #navbar {
+        font-size: 15px;
+        position: fixed;
+        margin-top: -7px;
+        width: 100%;
+        background-color: white;
+    }
+    #menu {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: white;
     }
 }
 
@@ -150,22 +166,6 @@ a {text-decoration: none; }
     }
     #comments {
         font-size: 12px;
-    }
-    #navbar.js {
-        display: none;
-    }
-    #navbar {
-        font-size: 15px;
-        position: fixed;
-        margin-top: -7px;
-        width: 100%;
-        background-color: white;
-    }
-    #menu {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background-color: white;
     }
 }
 
@@ -219,7 +219,7 @@ img{margin-bottom:-5px}a{color:inherit}
 .w3-layout-container,.w3-cell-row{display:table;width:100%}.w3-layout-row{display:table-row}.w3-layout-cell,.w3-layout-col,.w3-cell{display:table-cell}
 .w3-layout-top,.w3-cell-top{vertical-align:top}.w3-layout-middle,.w3-cell-middle{vertical-align:middle}.w3-layout-bottom,.w3-cell-bottom{vertical-align:bottom}
 .w3-hide{display:none!important}.w3-show-block,.w3-show{display:block!important}.w3-show-inline-block{display:inline-block!important}
-@media (max-width:343px){.w3-modal-content{margin:0 10px;width:auto!important}.w3-modal{padding-top:30px}
+@media (max-width:600px){.w3-modal-content{margin:0 10px;width:auto!important}.w3-modal{padding-top:30px}
 
 
 /* makes navbar drop to a list in a narrow viewport */

@@ -47,6 +47,14 @@
   <h3>the blogs</h3>
   <a href="http://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
   <g:plusone></g:plusone>
+  <a href="picture-of-disguised-bas.html"><div id="blog-9" style="margin-bottom:2em">
+    <div id="blog-title-9" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
+    <div id="blog-preview-9" style="font-size:90%"></div>
+    <div id="blog-author-9" style="color:grey;font-size:80%;float:left"></div>
+    <div id="blog-createdDate-9" style="color:grey;font-size:80%;margin-left:2em;float:left"></div>
+    <div style="clear:both;"></div>
+  </div></a>
+
   <a href="art-of-flanerie.html"><div id="blog-8" style="margin-bottom:2em">
     <div id="blog-title-8" style="padding-top:1em;color:saddlebrown;font-size:100%;font-weight:bold;text-align:left"></div>
     <div id="blog-preview-8" style="font-size:90%"></div>
@@ -135,6 +143,24 @@ $(document).ready(function () {
     $(window).resize(function() {
         if(window.innerWidth > 600) {
             $("#navbar").removeAttr("style");
+        }
+    });
+
+    //get blog-9 details from cosmic api
+    var blog9 = "https://api.cosmicjs.com/v1/matttea-blog-app/object/the-picture-of-disguised-bas";
+    $.get(blog9, function (data) {
+        if (!!data) {
+            var title = data.object.title;
+            var author = data.object.metadata.author.title;
+            var createdDate = data.object.created_at;
+            var displayDate = createdDate.charAt(8) + createdDate.charAt(9) + '/' + createdDate.charAt(5) + createdDate.charAt(6) + '/' + createdDate.charAt(0) + createdDate.charAt(1) + createdDate.charAt(2) + createdDate.charAt(3);
+            var content = data.object.content;
+            var preview = content.substring(0, 150) + '... >>';
+
+            $("#blog-title-9").html(title);
+            $("#blog-author-9").html(author);
+            $("#blog-createdDate-9").html(displayDate);
+            $("#blog-preview-9").html(preview);
         }
     });
 

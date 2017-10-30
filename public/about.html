@@ -17,30 +17,12 @@
 <body>
 
 <!-- Navigation -->
-<nav>
-    <ul class="w3-navbar w3-black" id="navbar">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="articles.html">Blogs</a></li>
-        <li><a href="side-projects.html">Side Projects</a></li>
-        <li><a href="#" style="font-weight:bold">About</a></li>
-    </ul>
-</nav>
+<div id="include_nav"></div>
 
 <div class="main">
 
 <!-- Headline -->
-<div id="headline">
-    <div class="container">
-        <header>
-            <h1><span>B.A(ng)</span></h1>
-            <h2>from business analyst to engineer</h2>
-        </header>
-        <div id="blurb">
-            <p>chatting about my experiences learning to code<br>and still trying to be a business analyst</p>
-        </div>
-    </div>
-</div>
-
+<div id="include_headline"></div>
 
 <!-- Author Details -->
 <div id="author" class="container" style="max-width: 600px">
@@ -62,13 +44,8 @@
     </div>
 </div>
 
-
-<!-- Footer  MAKE <section> TO FIX TO BOTTOM WHEN MAKING AUTHOR DETAILS FLOAT? -->
-<footer id="footer">
-    <div class="container" style="text-align:center">
-        <p>mattTea | B.A(ng)</p>
-    </div>
-</footer>
+<!-- Footer -->
+<div id="include_footer"></div>
 
 </div>
 
@@ -87,6 +64,15 @@ $(document).ready(function () {
         if(window.innerWidth > 600) {
             $("#navbar").removeAttr("style");
         }
+    });
+
+    $(function(){
+        $("#include_nav").load("/modules/nav.html", function() {
+            $("#nav4").attr("href","#");
+            $("#nav4").attr("style","font-weight:bold");
+        });
+        $("#include_headline").load("/modules/headline.html");
+        $("#include_footer").load("/modules/footer.html");
     });
 });
 

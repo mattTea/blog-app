@@ -55,15 +55,17 @@
 //when page has fully rendered then execute this code
 $(document).ready(function () {
 
-    $("#navbar").addClass("js").before('<div id="menu" style="color:#784300"><span>☰</span></div>');
-    $("#menu").click(function() {
-        $("#navbar").slideToggle();
-    });
+    $(window).bind("load", function() {
+        $("#navbar").addClass("js").before('<div id="menu" style="color:#784300"><span>☰</span></div>');
+        $("#menu").click(function() {
+            $("#navbar").slideToggle();
+        });
 
-    $(window).resize(function() {
-        if(window.innerWidth > 600) {
-            $("#navbar").removeAttr("style");
-        }
+        $(window).resize(function() {
+            if(window.innerWidth > 600) {
+                $("#navbar").removeAttr("style");
+            }
+        });
     });
 
     $(function(){

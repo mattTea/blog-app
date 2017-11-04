@@ -53,6 +53,11 @@
     font-size: 18px;
 }
 
+.social {
+    clear: both;
+    padding-top: 3em;
+}
+
 textarea {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -154,6 +159,9 @@ a {text-decoration: none; }
     }
     .project-content {
       margin-left: 100px;
+    }
+    button {
+      font-size: 10px;
     }
     #blog-content {
         font-size: 12px;

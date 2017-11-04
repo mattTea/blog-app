@@ -60,7 +60,7 @@
 //when page has fully rendered then execute this code
 $(document).ready(function () {
 
-    $(window).bind("load", function() {
+    setTimeout(function () {
         $("#navbar").addClass("js").before('<div id="menu" style="color:#784300"><span>☰</span></div>');
         $("#menu").click(function() {
             $("#navbar").slideToggle();
@@ -71,7 +71,7 @@ $(document).ready(function () {
                 $("#navbar").removeAttr("style");
             }
         });
-    });
+    }, 250);
 
     $(function(){
         $("#include_nav").load("/modules/nav.html", function() {

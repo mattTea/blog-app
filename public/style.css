@@ -68,14 +68,17 @@ textarea {
 button {
     font-family: Questrial;
     cursor: pointer;
+    background-color: #FCF1DD;
+    padding: 0.2rem;
+    width: 7.5em;
     border-radius: 5px;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
 button:hover {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #E1FEE1;
+    color: black;
 }
 
 a {text-decoration: none; }
@@ -161,7 +164,8 @@ a {text-decoration: none; }
       margin-left: 100px;
     }
     button {
-      font-size: 10px;
+      font-size: 9px;
+      width: 6em
     }
     #blog-content {
         font-size: 12px;
